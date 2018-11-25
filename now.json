@@ -1,0 +1,12 @@
+{
+    "version": 2,
+    "name" : "api.generator",
+    "public" :false,
+    "alias" : "soccerapi-generator.now.sh",
+    "builds": [
+        {
+            "src": "v1/**/index.php",
+            "use": "@now/php"
+        }
+    ]
+}

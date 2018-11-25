@@ -1,0 +1,9 @@
+{
+    "name": "generator-foot",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Generator\\": "src/"
+        }
+    }
+}

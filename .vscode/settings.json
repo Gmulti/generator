@@ -1,0 +1,5 @@
+{
+    "php-cs-fixer.onsave": true,
+    "phpcs.enable": true,
+    "phpcs.standard": "PSR2"
+}
