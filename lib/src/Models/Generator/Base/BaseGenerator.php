@@ -105,15 +105,19 @@ class BaseGenerator implements GeneratorInterface
      */
     public function generate($data) : string
     {
-        $txt = '';
+        $str = '';
         foreach ($this->getSetupTextGenerators() as $key => $textGenerator) {
             if (array_key_exists('data', $textGenerator)) {
-                $txt .= $textGenerator->generate($textGenerator['data']);
+                $str .= $textGenerator->generate($textGenerator['data']);
             } else {
-                $txt .= $textGenerator->generate($data);
+                $str .= $textGenerator->generate($data);
             }
         }
 
-        return Spinning::process($txt);
+        $str = Spinning::process($str);
+        $variableToString = generator_get_service('VariableToString');
+        $str = $variableToString->setDataset($data)->replace($str , $data); 
+        
+        return $str;
     }
 }

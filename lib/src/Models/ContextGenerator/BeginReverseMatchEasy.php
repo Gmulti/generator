@@ -6,7 +6,7 @@ use  Generator\Models\ContextGenerator\Base\BaseContextGenerator;
 
 class BeginReverseMatchEasy extends BaseContextGenerator
 {
-    protected $text = "Déplacement à priori facile de [[visitor_team]] à [[home_team]]";
+    protected $text = "Déplacement à priori facile de [[visitor_team#labels#name]] à [[home_team#labels#name]]";
 
     protected $dataSpecTest = [
         [
