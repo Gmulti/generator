@@ -1,10 +1,11 @@
 <?php
 
-namespace Generator\Models\TextGenerator\Base;
+namespace Generator\Models\ContextGenerator\Base;
 
 use Generator\Helpers\Spinning;
+use Generator\Models\ContextGenerator\Base\TextGeneratorInterface;
 
-class BaseTextGenerator
+class BaseContextGenerator implements TextGeneratorInterface, ContextGeneratorInterface
 {
     protected $dataSpecTest = [];
 

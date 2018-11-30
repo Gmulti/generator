@@ -1,11 +1,10 @@
 <?php
 
-namespace Generator\Models\TextGenerator;
+namespace Generator\Models\ContextGenerator;
 
-use  Generator\Models\TextGenerator\Base\BaseTextGenerator;
+use  Generator\Models\ContextGenerator\Base\BaseContextGenerator;
 
-
-class LoseLastMatchAndFavorite extends BaseTextGenerator
+class LoseLastMatchAndFavorite extends BaseContextGenerator
 {
     protected $text = " avec l'obligation de {s'imposer|prendre les 3 points|faire un résultat} après {son récent revers|sa récente défaite}";
 
@@ -15,7 +14,7 @@ class LoseLastMatchAndFavorite extends BaseTextGenerator
                 "condition_test" => "LoseInRowHomeTeam",
                 "value" => 1,
             ]
-        ]
+        ],
     ];
 
 }

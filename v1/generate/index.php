@@ -17,7 +17,7 @@ die;
 // try {
 //     $generators = [
 //         [
-//             "class" => "\Generator\Models\TextGenerator\LoseLastMatchAndFavorite",
+//             "class" => "\Generator\Models\ContextGenerator\LoseLastMatchAndFavorite",
 //             // "dataSpecTest" => [
 //             //     [
 //             //         [

@@ -2,7 +2,6 @@
 
 namespace Generator\Factory\Specification;
 
-
 use Generator\Models\SpecificationFactoryInterface;
 use Generator\Models\Specification\NotX;
 use Generator\Models\Specification\OrX;
@@ -12,8 +11,8 @@ use Generator\Models\Specification\EqualsSpecification;
 
 class SpecificationFactory implements SpecificationFactoryInterface
 {
-    
-    public function __construct(){
+    public function __construct()
+    {
         $this->conditionTest = array(
             "equals" => "\Generator\Models\Specification\EqualsSpecification",
             "contains" => "\Generator\Models\Specification\ContainsSpecification"
@@ -26,7 +25,8 @@ class SpecificationFactory implements SpecificationFactoryInterface
      * @param string $label
      * @return SpecificationFactory
      */
-    public function setConditionTest($key, $label){
+    public function setConditionTest($key, $label)
+    {
         $this->conditionTest[$key] = $label;
         return $this;
     }
@@ -35,7 +35,8 @@ class SpecificationFactory implements SpecificationFactoryInterface
      *
      * @return array
      */
-    public function getConditionsTest(){
+    public function getConditionsTest()
+    {
         return $this->conditionTest;
     }
 
@@ -44,13 +45,18 @@ class SpecificationFactory implements SpecificationFactoryInterface
      * @param array $data
      * @return Specification
      */
-    public function constructSpecification($data){
-
+    public function constructSpecification($data)
+    {
         $arraySpec = array();
 
         foreach ($data as $keyOr => $valueOr) {
             foreach ($valueOr as $keyAnd => $valueAnd) {
-                $arraySpec[$keyOr][] = $this->getSpecificationFromConditionTest($valueAnd['condition_test'], $valueAnd['value']);
+                if( ! array_key_exists( 'value', $valueAnd ) ){
+                    $arraySpec[$keyOr][] = $this->getSpecificationFromConditionTest($valueAnd['condition_test']);
+                }
+                else{
+                    $arraySpec[$keyOr][] = $this->getSpecificationFromConditionTest($valueAnd['condition_test'], $valueAnd['value']);
+                }
             }
         }
 
@@ -65,22 +71,21 @@ class SpecificationFactory implements SpecificationFactoryInterface
      * @param array $arraySpec
      * @return Specification
      */
-    protected function constructOrSpecification($arraySpec){
+    protected function constructOrSpecification($arraySpec)
+    {
         $specification = null;
 
-        if(count($arraySpec) > 1){
+        if (count($arraySpec) > 1) {
             foreach ($arraySpec as $key => $value) {
                 if (array_key_exists($key+1, $arraySpec)) {
-                    $specification = ($specification === null) ? 
-                                      new OrX($this->constructAndSpecification($value), $this->constructAndSpecification($arraySpec[$key+1])) : 
+                    $specification = ($specification === null) ?
+                                      new OrX($this->constructAndSpecification($value), $this->constructAndSpecification($arraySpec[$key+1])) :
                                       new OrX($specification, $this->constructAndSpecification($arraySpec[$key+1]));
-                }
-                else{
+                } else {
                     $specification = new OrX($specification, $this->constructAndSpecification($value));
                 }
             }
-        }
-        else{
+        } else {
             $arraySpec     = array_values($arraySpec);
             $specification = $this->constructAndSpecification($arraySpec[0]);
         }
@@ -93,18 +98,18 @@ class SpecificationFactory implements SpecificationFactoryInterface
      * @param array $andSpecs
      * @return Specification
      */
-    protected function constructAndSpecification($andSpecs){
+    protected function constructAndSpecification($andSpecs)
+    {
         $andSpecification = null;
 
-        if(!empty($andSpecs) && count($andSpecs) === 1){
+        if (!empty($andSpecs) && count($andSpecs) === 1) {
             return $andSpecs[0];
-        }
-        else{
+        } else {
             foreach ($andSpecs as $key => $value) {
                 if (array_key_exists($key+1, $andSpecs)) {
-                    $andSpecification = ($andSpecification === null) ? 
-                                        new AndX($value, $andSpecs[$key+1]) : 
-                                        new AndX($andSpecification, $andSpecs[$key+1]);       
+                    $andSpecification = ($andSpecification === null) ?
+                                        new AndX($value, $andSpecs[$key+1]) :
+                                        new AndX($andSpecification, $andSpecs[$key+1]);
                 }
             }
         }
@@ -118,24 +123,32 @@ class SpecificationFactory implements SpecificationFactoryInterface
      * @param string $value
      * @return Specification
      */
-    public function getSpecificationFromConditionTest($conditionTest, $value){
-        
-        $stringChoice = new ContainsSpecification($conditionTest);
-        $spec         = "";
-        $conditionTest = str_replace('not_', '', $conditionTest);
-
-        if( ! array_key_exists( $conditionTest, $this->conditionTest)){
-            return false;
+    public function getSpecificationFromConditionTest($conditionTest, $value = null)
+    {
+        if (is_string($conditionTest)) {
+            $stringChoice = new ContainsSpecification($conditionTest);
+            $spec         = "";
+            $conditionTest = str_replace('not_', '', $conditionTest);
+    
+            if (! array_key_exists($conditionTest, $this->conditionTest)) {
+                return false;
+            }
+    
+            $classSpecification = $this->conditionTest[$conditionTest];
+    
+            if ($stringChoice->isSatisfedBy("not_")) {
+                $spec = new NotX(new $classSpecification($value));
+            } else {
+                $spec = new $classSpecification($value);
+            }
         }
 
-        $classSpecification = $this->conditionTest[$conditionTest];
-
-        if($stringChoice->isSatisfedBy("not_")){
-            $spec = new NotX(new $classSpecification($value));
-        }
-        else{
-            $spec = new $classSpecification($value);
-        }
+        // @TODO : CALLBACK
+        // else {
+        //     var_dump('here');
+        //     var_dump($conditionTest);
+        //     die;
+        // }
 
         return $spec;
     }

@@ -9,23 +9,61 @@ use Generator\Models\Generator\Base\BaseGenerator;
 
 $data = json_decode(file_get_contents(__DIR__ . '/test.json'));
 
+
+// VisitorTeamReallyBestHomeTeam
+// => Best Visitor Home
+
+// Context dans context
+
 try {
     $generators = [
         [
-            "class" => "\Generator\Models\TextGenerator\LoseLastMatchAndFavorite",
+            "class" => "\Generator\Models\ContextGenerator\Many\BeginMatch", 
         ],
-        [
-            "class" => "\Generator\Models\TextGenerator\Base\BaseTextGenerator",
-            "dataSpecTest" => [
-                [
-                    [
-                        "condition_test" => "DrawInRowHomeTeam",
-                        "value" => 1,
-                    ]
-                ]
-            ],
-            "text" => " avec l'obligation de {s'imposer|prendre les 3 points|faire un résultat} après {son récent revers|sa récente défaite}"
-        ]
+        // [
+        //     "class" => "\Generator\Models\ContextGenerator\VisitorTeamBestHomeTeam", // Context
+        //     "text" => "[visitor_team] {se déplace|rend visite} [home_team]"
+        // ],
+        // [
+        //     "class" => "\Generator\Models\ContextGenerator\HomeTeamBestVisitorTeam", // Context
+        //     "text" => "[home_team] {reçoit|affronte} [visitor_team]"
+        // ],
+        // [
+        //     "class" => "\Generator\Models\ContextGenerator\LoseLastMatchAndFavorite", // Context
+        // ],
+        // [
+        //     "class" => "\Generator\Models\ContextGenerator\Base\BaseContextGenerator",
+        //     "dataSpecTest" => [
+        //         [
+        //             [
+        //                 "condition_test" => "DrawInRowHomeTeam",
+        //                 "value" => 1,
+        //             ]
+        //         ]
+        //     ],
+        // ],
+        // [
+        //     "class" => "\Generator\Models\ContextGenerator\Base\BaseContextGenerator",
+        //     "dataSpecTest" => [
+        //         [
+        //             [
+        //                 "condition_test" => "DrawInRowHomeTeam",
+        //                 "value" => 1,
+        //             ]
+        //         ]
+        //     ],
+        //     "text" => " avec l'obligation de {s'imposer|prendre les 3 points|faire un résultat} après {son récent revers|sa récente défaite}"
+        // ],
+        // [
+        //     "class" => "\Generator\Models\ContextGenerator\Base\BaseContextGenerator",
+        //     "dataSpecTest" => [
+        //         [
+        //             [
+        //                 "condition_test" => "IsTopMatch"
+        //             ]
+        //         ]
+        //     ],
+        // ]
     ];
 
     $baseGenerator = new BaseGenerator($generators);

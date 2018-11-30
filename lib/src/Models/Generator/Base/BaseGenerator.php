@@ -3,14 +3,43 @@
 namespace Generator\Models\Generator\Base;
 
 use Generator\Helpers\Spinning;
+use Generator\Factory\ManyContextGeneratorFactory;
+use Generator\Factory\TextGeneratorFactory;
+
+use Generator\Models\ContextGenerator\Base\ManyContextGeneratorInterface;
+use Generator\Models\ContextGenerator\Base\TextGeneratorInterface;
+
 
 class BaseGenerator implements GeneratorInterface
 {
     protected $textGenerators;
 
-    public function __construct(array $textGenerators = [])
+    public function __construct(array $textGenerators = [], $factories = [])
     {
         $this->setTextGenerators($textGenerators);
+
+        if( ! array_key_exists( "ManyContextGenerator", $factories ) ){
+            $this->setDefaultManyContextGeneratorFactory();
+        }
+        else{
+            $this->manyContextGeneratorFactory = $factories["ManyContextGenerator"];
+        }
+
+        if( ! array_key_exists( "TextGenerator", $factories ) ){
+            $this->setDefaultTextGeneratorFactory();
+        }
+        else{
+            $this->textGeneratorFactory = $factories["TextGenerator"];
+
+        }
+    }
+
+    public function setDefaultTextGeneratorFactory(){
+        $this->textGeneratorFactory = new TextGeneratorFactory();
+    }
+
+    public function setDefaultManyContextGeneratorFactory(){
+        $this->manyContextGeneratorFactory = new ManyContextGeneratorFactory();
     }
 
     /**
@@ -39,21 +68,23 @@ class BaseGenerator implements GeneratorInterface
      */
     protected function getSetupTextGenerators()
     {
-        $textGenerators = $this->getTextGenerators();
-        foreach ($this->getTextGenerators() as $key => $textGenerator) {
-            if (array_key_exists('class', $textGenerator) && is_string($textGenerator['class'])) {
-                $textGenerators[$key]['class'] = new $textGenerator['class']();
+        foreach ($this->getTextGenerators() as $key => $contextGenerator) {
+            if(!array_key_exists('class', $contextGenerator)){
+                continue;
+            }
+        
+            if (array_key_exists('class', $contextGenerator) && is_string($contextGenerator['class'])) {
+                $contextGenerator['class'] = new $contextGenerator['class']();
             }
 
-            if (array_key_exists('dataSpecTest', $textGenerator)) {
-                $textGenerators[$key]['class']->setDataSpecTest($textGenerator['dataSpecTest']);
+            if ($contextGenerator['class'] instanceof ManyContextGeneratorInterface) {
+                $contextGenerator = $this->manyContextGeneratorFactory->constructManyContextGenerator($contextGenerator);
+            }
+            else if ($contextGenerator['class'] instanceof TextGeneratorInterface) {
+                $contextGenerator = $this->textGeneratorFactory->constructTextGenerator($contextGenerator);
             }
 
-            if (array_key_exists('text', $textGenerator)) {
-                $textGenerators[$key]['class']->setText($textGenerator['text']);
-            }
-
-            yield $textGenerators[$key]['class'];
+            yield $contextGenerator;
         }
     }
 

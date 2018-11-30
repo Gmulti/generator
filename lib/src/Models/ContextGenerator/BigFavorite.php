@@ -1,10 +1,10 @@
 <?php
 
-namespace Generator\Models\TextGenerator;
+namespace Generator\Models\ContextGenerator;
 
-use  Generator\Models\TextGenerator\Base\BaseTextGenerator;
+use  Generator\Models\ContextGenerator\Base\BaseContextGenerator;
 
-class BigFavorite extends BaseTextGenerator
+class BigFavorite extends BaseContextGenerator
 {
     protected $text = " {en grandissime favori}";
 

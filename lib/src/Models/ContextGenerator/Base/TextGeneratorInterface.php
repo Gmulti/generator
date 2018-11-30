@@ -1,6 +1,6 @@
 <?php
 
-namespace Generator\Models\Generator\Base;
+namespace Generator\Models\ContextGenerator\Base;
 
 /**
  * @version 1.0.0
@@ -10,13 +10,6 @@ namespace Generator\Models\Generator\Base;
  */
 interface TextGeneratorInterface
 {
-    /**
-    *
-    * @param array $data
-    * @return string
-    */
-    public function generate($data) : string;
-
     /**
      *
      * @return array
