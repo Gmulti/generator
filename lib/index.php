@@ -18,16 +18,8 @@ $data = json_decode(file_get_contents(__DIR__ . '/test.json'));
 try {
     $generators = [
         [
-            "class" => "\Generator\Models\ContextGenerator\Many\BeginMatch", 
+            "class" => "\Generator\Models\ContextGenerator\Many\BeginMatch",
         ],
-        // [
-        //     "class" => "\Generator\Models\ContextGenerator\VisitorTeamBestHomeTeam", // Context
-        //     "text" => "[visitor_team] {se déplace|rend visite} [home_team]"
-        // ],
-        // [
-        //     "class" => "\Generator\Models\ContextGenerator\HomeTeamBestVisitorTeam", // Context
-        //     "text" => "[home_team] {reçoit|affronte} [visitor_team]"
-        // ],
         // [
         //     "class" => "\Generator\Models\ContextGenerator\LoseLastMatchAndFavorite", // Context
         // ],

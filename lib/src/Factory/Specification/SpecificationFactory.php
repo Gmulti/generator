@@ -51,11 +51,12 @@ class SpecificationFactory implements SpecificationFactoryInterface
 
         foreach ($data as $keyOr => $valueOr) {
             foreach ($valueOr as $keyAnd => $valueAnd) {
+                $invert = $valueAnd['invert'] ?? false;
                 if( ! array_key_exists( 'value', $valueAnd ) ){
-                    $arraySpec[$keyOr][] = $this->getSpecificationFromConditionTest($valueAnd['condition_test']);
+                    $arraySpec[$keyOr][] = $this->getSpecificationFromConditionTest($valueAnd['condition_test'], null, $invert);
                 }
                 else{
-                    $arraySpec[$keyOr][] = $this->getSpecificationFromConditionTest($valueAnd['condition_test'], $valueAnd['value']);
+                    $arraySpec[$keyOr][] = $this->getSpecificationFromConditionTest($valueAnd['condition_test'], $valueAnd['value'], $invert);
                 }
             }
         }
@@ -123,20 +124,17 @@ class SpecificationFactory implements SpecificationFactoryInterface
      * @param string $value
      * @return Specification
      */
-    public function getSpecificationFromConditionTest($conditionTest, $value = null)
+    public function getSpecificationFromConditionTest($conditionTest, $value = null, $invert = false)
     {
         if (is_string($conditionTest)) {
-            $stringChoice = new ContainsSpecification($conditionTest);
-            $spec         = "";
-            $conditionTest = str_replace('not_', '', $conditionTest);
-    
+
             if (! array_key_exists($conditionTest, $this->conditionTest)) {
                 return false;
             }
-    
+
             $classSpecification = $this->conditionTest[$conditionTest];
     
-            if ($stringChoice->isSatisfedBy("not_")) {
+            if ($invert) {
                 $spec = new NotX(new $classSpecification($value));
             } else {
                 $spec = new $classSpecification($value);
