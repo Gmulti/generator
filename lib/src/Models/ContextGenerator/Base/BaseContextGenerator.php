@@ -3,28 +3,38 @@
 namespace Generator\Models\ContextGenerator\Base;
 
 use Generator\Helpers\Spinning;
-use Generator\Models\ContextGenerator\Base\TextGeneratorInterface;
+use Generator\Models\SpecificationServiceInterface;
+use Generator\Services\Specification;
 
 class BaseContextGenerator implements TextGeneratorInterface, ContextGeneratorInterface
 {
     protected $dataSpecTest = [];
 
-    protected $text = "";
+    protected $text = '';
 
-    public function __construct()
+    /**
+     * @param SpecificationServiceInterface $specificationService
+     */
+    public function __construct(SpecificationServiceInterface $specificationService = null)
     {
-        $this->specificationService = generator_get_service('Specification');
+        if (is_null($specificationService)) {
+            $this->createDefaultSpecificationService();
+        }
+    }
+
+    private function createDefaultSpecificationService()
+    {
+        $this->specificationService = new Specification();
     }
 
     /**
-     *
      * @param array $data
+     *
      * @return string
      */
-    public function generate($data) : string
+    public function generate($data): string
     {
         $spec = $this->specificationService->constructSpecification($this->dataSpecTest);
-
         if (!$spec->isSatisfedBy($data)) {
             return '';
         }
@@ -33,41 +43,37 @@ class BaseContextGenerator implements TextGeneratorInterface, ContextGeneratorIn
     }
 
     /**
-     *
      * @return array
      */
-    public function getDataSpecTest() : array
+    public function getDataSpecTest(): array
     {
         return $this->dataSpecTest;
     }
 
     /**
-     *
      * @param array $dataSpecTest
-     * @return void
      */
     public function setDataSpecTest(array $dataSpecTest)
     {
         $this->dataSpecTest = $dataSpecTest;
+
         return $this;
     }
 
     /**
-     *
      * @param string $text
-     * @return void
      */
     public function setText(string $text)
     {
         $this->text = $text;
+
         return $this;
     }
 
     /**
-     *
      * @return string
      */
-    public function getText() : string
+    public function getText(): string
     {
         return $this->text;
     }

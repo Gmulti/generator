@@ -20,10 +20,11 @@ class BaseIsTeamInLeague extends AbstractSpecification
 
     /**
      * @param object $item
-     * @return boolean
+     *
+     * @return bool
      */
     public function isSatisfedBy($item)
     {
-        return in_array($item->{$this->typeTeam}->id, $this->ids);
+        return in_array($item[$this->typeTeam]['id'], $this->ids);
     }
 }

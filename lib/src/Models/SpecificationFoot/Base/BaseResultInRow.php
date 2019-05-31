@@ -20,13 +20,14 @@ class BaseResultInRow extends AbstractSpecification
 
     /**
      * @param object $item
-     * @return boolean
+     *
+     * @return bool
      */
     public function isSatisfedBy($item)
     {
-        $recentForm = str_split($item->{$this->typeTeam}->recent_form, $this->string)[0];
+        $recentForm = str_split($item[$this->typeTeam]['recent_form'], $this->string)[0];
         $str = '';
-        for ($i=0; $i < $this->string ; $i++) {
+        for ($i = 0; $i < $this->string; ++$i) {
             $str .= $this->typeResult;
         }
 

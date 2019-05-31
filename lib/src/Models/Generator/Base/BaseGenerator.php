@@ -5,82 +5,83 @@ namespace Generator\Models\Generator\Base;
 use Generator\Helpers\Spinning;
 use Generator\Factory\ManyContextGeneratorFactory;
 use Generator\Factory\TextGeneratorFactory;
-
 use Generator\Models\ContextGenerator\Base\ManyContextGeneratorInterface;
 use Generator\Models\ContextGenerator\Base\TextGeneratorInterface;
-
+use Generator\Models\VariableToStringServiceInterface;
+use Generator\Services\VariableToString;
 
 class BaseGenerator implements GeneratorInterface
 {
     protected $textGenerators;
 
-    public function __construct(array $textGenerators = [], $factories = [])
+    public function __construct(array $textGenerators = [], $factories = [], VariableToStringServiceInterface $variableToString = null)
     {
         $this->setTextGenerators($textGenerators);
 
-        if( ! array_key_exists( "ManyContextGenerator", $factories ) ){
+        if (!array_key_exists('ManyContextGenerator', $factories)) {
             $this->setDefaultManyContextGeneratorFactory();
-        }
-        else{
-            $this->manyContextGeneratorFactory = $factories["ManyContextGenerator"];
+        } else {
+            $this->manyContextGeneratorFactory = $factories['ManyContextGenerator'];
         }
 
-        if( ! array_key_exists( "TextGenerator", $factories ) ){
+        if (!array_key_exists('TextGenerator', $factories)) {
             $this->setDefaultTextGeneratorFactory();
+        } else {
+            $this->textGeneratorFactory = $factories['TextGenerator'];
         }
-        else{
-            $this->textGeneratorFactory = $factories["TextGenerator"];
 
+        if (is_null($variableToString)) {
+            $this->createVariableToStringService();
         }
     }
 
-    public function setDefaultTextGeneratorFactory(){
+    public function createVariableToStringService()
+    {
+        $this->variableToStringService = new VariableToString();
+    }
+
+    public function setDefaultTextGeneratorFactory()
+    {
         $this->textGeneratorFactory = new TextGeneratorFactory();
     }
 
-    public function setDefaultManyContextGeneratorFactory(){
+    public function setDefaultManyContextGeneratorFactory()
+    {
         $this->manyContextGeneratorFactory = new ManyContextGeneratorFactory();
     }
 
     /**
-     *
      * @param array $textGenerators
-     * @return void
      */
     public function setTextGenerators(array $textGenerators)
     {
         $this->textGenerators = $textGenerators;
+
         return $this;
     }
 
     /**
-     *
      * @return array
      */
-    public function getTextGenerators() : array
+    public function getTextGenerators(): array
     {
         return $this->textGenerators;
     }
 
-    /**
-     *
-     * @return void
-     */
     protected function getSetupTextGenerators()
     {
         foreach ($this->getTextGenerators() as $key => $contextGenerator) {
-            if(!array_key_exists('class', $contextGenerator)){
+            if (!array_key_exists('class', $contextGenerator)) {
                 continue;
             }
-        
+
             if (array_key_exists('class', $contextGenerator) && is_string($contextGenerator['class'])) {
                 $contextGenerator['class'] = new $contextGenerator['class']();
             }
 
             if ($contextGenerator['class'] instanceof ManyContextGeneratorInterface) {
                 $contextGenerator = $this->manyContextGeneratorFactory->constructManyContextGenerator($contextGenerator);
-            }
-            else if ($contextGenerator['class'] instanceof TextGeneratorInterface) {
+            } elseif ($contextGenerator['class'] instanceof TextGeneratorInterface) {
                 $contextGenerator = $this->textGeneratorFactory->constructTextGenerator($contextGenerator);
             }
 
@@ -88,6 +89,9 @@ class BaseGenerator implements GeneratorInterface
         }
     }
 
+    /**
+     * @return int
+     */
     public function countWords()
     {
         $count = 0;
@@ -99,11 +103,11 @@ class BaseGenerator implements GeneratorInterface
     }
 
     /**
-     *
      * @param any $data
+     *
      * @return string
      */
-    public function generate($data) : string
+    public function generate($data): string
     {
         $str = '';
         foreach ($this->getSetupTextGenerators() as $key => $textGenerator) {
@@ -115,9 +119,8 @@ class BaseGenerator implements GeneratorInterface
         }
 
         $str = Spinning::process($str);
-        $variableToString = generator_get_service('VariableToString');
-        $str = $variableToString->setDataset($data)->replace($str , $data); 
-        
+        $str = $this->variableToStringService->setDataset($data)->replace($str, $data);
+
         return $str;
     }
 }

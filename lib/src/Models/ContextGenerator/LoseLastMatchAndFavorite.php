@@ -11,10 +11,9 @@ class LoseLastMatchAndFavorite extends BaseContextGenerator
     protected $dataSpecTest = [
         [
             [
-                "condition_test" => "LoseInRowHomeTeam",
-                "value" => 1,
-            ]
+                'condition_test' => 'LoseInRowHomeTeam',
+                'value' => 1,
+            ],
         ],
     ];
-
 }

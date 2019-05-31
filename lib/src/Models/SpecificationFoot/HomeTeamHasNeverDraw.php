@@ -6,7 +6,7 @@ use Generator\Models\SpecificationFoot\Base\BaseTeamHasNeverX;
 
 class HomeTeamHasNeverDraw extends BaseTeamHasNeverX
 {
-    protected $typeTeam = "position_home_team";
+    protected $typeTeam = 'position_home_team';
 
-    protected $typeResult = "draw";
+    protected $typeResult = 'draw';
 }

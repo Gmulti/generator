@@ -1,5 +1,4 @@
 {
-    "php-cs-fixer.onsave": true,
-    "phpcs.enable": true,
-    "phpcs.standard": "PSR2"
+    "vscode-php-cs-fixer.rules": "@PSR2,@Symfony,-yoda_style",
+    "vscode-php-cs-fixer.fixOnSave": true
 }

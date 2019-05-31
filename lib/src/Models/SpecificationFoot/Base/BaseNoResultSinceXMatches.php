@@ -6,7 +6,6 @@ use Generator\Models\Specification\AbstractSpecification;
 
 class BaseNoResultSinceXMatches extends AbstractSpecification
 {
-
     protected $typeTeam = '';
 
     protected $typeResult = '';
@@ -21,11 +20,12 @@ class BaseNoResultSinceXMatches extends AbstractSpecification
 
     /**
      * @param object $item
-     * @return boolean
+     *
+     * @return bool
      */
     public function isSatisfedBy($item)
     {
-        $recentForm = str_split($item->{$this->typeTeam}->recent_form, $this->string)[0];
+        $recentForm = str_split($item[$this->typeTeam]['recent_form'], $this->string)[0];
 
         return strpos($recentForm, $this->typeResult) === false;
     }

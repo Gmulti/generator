@@ -3,39 +3,40 @@
 namespace Generator\Services;
 
 use Generator\Models\SpecificationFactoryInterface;
-use Generator\Models\ServiceInterface;
+use Generator\Models\SpecificationServiceInterface;
 use Generator\Factory\Specification\SpecificationFactory;
 
-class Specification implements ServiceInterface
+class Specification implements SpecificationServiceInterface
 {
     /**
-     * @param SpecificationFactoryInterface|null $factory 
+     * @param SpecificationFactoryInterface|null $factory
      */
-    public function __construct(SpecificationFactoryInterface $factory = null){
+    public function __construct(SpecificationFactoryInterface $factory = null)
+    {
         $this->specificationFactory = $factory;
-
         $this->createDefaultSpecificationFoot();
     }
 
-    public function createDefaultSpecificationFoot(){
-        $files      = array_diff(scandir(GENERATOR_DIR . '/Models/SpecificationFoot'), [ '..', '.' ]);
+    public function createDefaultSpecificationFoot()
+    {
+        $files = array_diff(scandir(__DIR__.'/../Models/SpecificationFoot'), ['..', '.']);
         foreach ($files as $filename) {
             $file = str_replace('.php', '', $filename);
-            $class = '\\Generator\\Models\\SpecificationFoot\\' . $file;
+            $class = '\\Generator\\Models\\SpecificationFoot\\'.$file;
 
             $name = $file;
-            if (defined($class . '::NAME')) {
+            if (defined($class.'::NAME')) {
                 $name = $class::NAME;
             }
             $this->getSpecificationFactory()->setConditionTest($name, $class);
         }
-
     }
 
     /**
      * @return SpecificationFactoryInterface
      */
-    public function getSpecificationFactory(){
+    public function getSpecificationFactory(): SpecificationFactoryInterface
+    {
         if (is_null($this->specificationFactory)) {
             $this->specificationFactory = $this->createDefaultSpecificationFactory();
         }
@@ -46,28 +47,30 @@ class Specification implements ServiceInterface
     /**
      * @return SpecificationFactory
      */
-    public function createDefaultSpecificationFactory(){
+    protected function createDefaultSpecificationFactory(): SpecificationFactoryInterface
+    {
         return new SpecificationFactory();
     }
-    
-
 
     /**
-     *
      * @param SpecificationFactoryInterface $factory
+     *
      * @return Specification
      */
-    public function setFactory(SpecificationFactoryInterface $factory){
+    public function setFactory(SpecificationFactoryInterface $factory)
+    {
         $this->specificationFactory = $factory;
+
         return $this;
     }
 
     /**
-     *
      * @param array $data
+     *
      * @return Generator\Models\SpecificationFactoryInterface
      */
-    public function constructSpecification($data){
+    public function constructSpecification($data)
+    {
         return $this->getSpecificationFactory()
                     ->constructSpecification($data);
     }

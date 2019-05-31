@@ -1,4 +1,3 @@
-docker
 .vscode
-Makefile
-Dockerfile
+.htaccess
+data

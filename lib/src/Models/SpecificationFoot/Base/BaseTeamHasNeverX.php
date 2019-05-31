@@ -10,14 +10,15 @@ class BaseTeamHasNeverX extends AbstractSpecification
 
     protected $typeResult = '';
 
-    protected $at = "overall";
+    protected $at = 'overall';
 
     /**
      * @param object $item
-     * @return boolean
+     *
+     * @return bool
      */
     public function isSatisfedBy($item)
     {
-        return $this->{$this->typeTeam}->overall->{$this->typeResult} === 0;
+        return $this[$this->typeTeam]['overall'][$this->typeResult] === 0;
     }
 }

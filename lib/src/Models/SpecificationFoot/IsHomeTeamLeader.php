@@ -6,13 +6,13 @@ use Generator\Models\Specification\AbstractSpecification;
 
 class IsHomeTeamLeader extends AbstractSpecification
 {
-
     /**
      * @param object $item
-     * @return boolean
+     *
+     * @return bool
      */
     public function isSatisfedBy($item)
     {
-        return $item->position_home_team->position === 1;
+        return $item['position_home_team']['position'] === 1;
     }
 }

@@ -4,6 +4,7 @@ namespace Generator\Models\ContextGenerator\Base;
 
 /**
  * @version 1.0.0
+ *
  * @since 1.0.0
  *
  * @author Thomas DENEULIN <thomasdeneulin@gmail.com>
@@ -11,28 +12,22 @@ namespace Generator\Models\ContextGenerator\Base;
 interface TextGeneratorInterface
 {
     /**
-     *
      * @return array
      */
-    public function getDataSpecTest() : array;
+    public function getDataSpecTest(): array;
 
     /**
-     *
      * @param array $dataSpecTest
-     * @return void
      */
     public function setDataSpecTest(array $dataSpecTest);
 
     /**
-     *
      * @param string $text
-     * @return void
      */
     public function setText(string $text);
 
     /**
-     *
      * @return string
      */
-    public function getText() : string;
+    public function getText(): string;
 }

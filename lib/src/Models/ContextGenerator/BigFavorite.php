@@ -6,15 +6,14 @@ use  Generator\Models\ContextGenerator\Base\BaseContextGenerator;
 
 class BigFavorite extends BaseContextGenerator
 {
-    protected $text = " {en grandissime favori}";
+    protected $text = ' {en grandissime favori}';
 
     protected $dataSpecTest = [
         [
             [
-                "condition_test" => "WinInRowHomeTeam",
-                "value" => 3,
-            ]
-        ]
+                'condition_test' => 'WinInRowHomeTeam',
+                'value' => 3,
+            ],
+        ],
     ];
-
 }

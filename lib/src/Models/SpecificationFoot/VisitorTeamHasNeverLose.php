@@ -6,7 +6,7 @@ use Generator\Models\SpecificationFoot\Base\BaseTeamHasNeverX;
 
 class VisitorTeamHasNeverLose extends BaseTeamHasNeverX
 {
-    protected $typeTeam = "position_visitor_team";
+    protected $typeTeam = 'position_visitor_team';
 
-    protected $typeResult = "lost";
+    protected $typeResult = 'lost';
 }

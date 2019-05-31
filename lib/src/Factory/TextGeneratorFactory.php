@@ -14,7 +14,6 @@ class TextGeneratorFactory
             $context['class']->setText($context['text']);
         }
 
-
         return $context['class'];
     }
 }
