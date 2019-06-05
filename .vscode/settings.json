@@ -1,4 +1,7 @@
 {
-    "vscode-php-cs-fixer.rules": "@PSR2,@Symfony,-yoda_style",
-    "vscode-php-cs-fixer.fixOnSave": true
+    "php-cs-fixer.executablePath": "php-cs-fixer",
+    "php-cs-fixer.onsave": true,
+    "php-cs-fixer.rules": "@PSR2, @Symfony",
+    "php-cs-fixer.config": ".php_cs",
+    "php-cs-fixer.autoFixByBracket": true
 }

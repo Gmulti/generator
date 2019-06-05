@@ -2,10 +2,14 @@
 
 namespace Generator\Models\ContextGenerator\Base;
 
-class BaseManyContextGenerator implements ContextGeneratorInterface, ManyContextGeneratorInterface
+class BaseManyContextGenerator implements ContextGenerate
 {
     protected $contexts = [];
 
+    /**
+     * @param array $data
+     * @return string
+     */
     public function generate($data): string
     {
         foreach ($this->contexts as $key => $context) {

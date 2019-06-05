@@ -4,7 +4,7 @@ namespace Generator\Models\Specification;
 
 use Generator\Models\Specification\AbstractSpecification;
 
-class EqualsSpecification extends AbstractSpecification
+class Equals extends AbstractSpecification
 {   
     /**
      *

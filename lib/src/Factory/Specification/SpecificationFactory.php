@@ -2,18 +2,20 @@
 
 namespace Generator\Factory\Specification;
 
-use Generator\Models\SpecificationFactoryInterface;
+use Generator\Models\SpecificationConditionTest;
+use Generator\Models\ConstructSpecification;
+use Generator\Models\Specification\AbstractSpecification;
 use Generator\Models\Specification\NotX;
 use Generator\Models\Specification\OrX;
 use Generator\Models\Specification\AndX;
 
-class SpecificationFactory implements SpecificationFactoryInterface
+class SpecificationFactory implements SpecificationConditionTest, ConstructSpecification
 {
     public function __construct()
     {
         $this->conditionTest = array(
-            'equals' => "\Generator\Models\Specification\EqualsSpecification",
-            'contains' => "\Generator\Models\Specification\ContainsSpecification",
+            'equals' => "\Generator\Models\Specification\Equals",
+            'contains' => "\Generator\Models\Specification\Contains",
         );
     }
 
@@ -33,7 +35,7 @@ class SpecificationFactory implements SpecificationFactoryInterface
     /**
      * @return array
      */
-    public function getConditionsTest()
+    public function getConditionsTest() : array
     {
         return $this->conditionTest;
     }
@@ -43,7 +45,7 @@ class SpecificationFactory implements SpecificationFactoryInterface
      *
      * @return Specification
      */
-    public function constructSpecification($data)
+    public function constructSpecification($data) : AbstractSpecification
     {
         $arraySpec = array();
 
@@ -59,7 +61,6 @@ class SpecificationFactory implements SpecificationFactoryInterface
         }
 
         $specification = $this->constructOrSpecification($arraySpec);
-
         return $specification;
     }
 
@@ -75,7 +76,7 @@ class SpecificationFactory implements SpecificationFactoryInterface
         if (count($arraySpec) > 1) {
             foreach ($arraySpec as $key => $value) {
                 if (array_key_exists($key + 1, $arraySpec)) {
-                    $specification = ($specification === null) ?
+                    $specification = (null === $specification) ?
                                       new OrX($this->constructAndSpecification($value), $this->constructAndSpecification($arraySpec[$key + 1])) :
                                       new OrX($specification, $this->constructAndSpecification($arraySpec[$key + 1]));
                 } else {
@@ -99,12 +100,12 @@ class SpecificationFactory implements SpecificationFactoryInterface
     {
         $andSpecification = null;
 
-        if (!empty($andSpecs) && count($andSpecs) === 1) {
+        if (!empty($andSpecs) && 1 === count($andSpecs)) {
             return $andSpecs[0];
         } else {
             foreach ($andSpecs as $key => $value) {
                 if (array_key_exists($key + 1, $andSpecs)) {
-                    $andSpecification = ($andSpecification === null) ?
+                    $andSpecification = (null === $andSpecification) ?
                                         new AndX($value, $andSpecs[$key + 1]) :
                                         new AndX($andSpecification, $andSpecs[$key + 1]);
                 }

@@ -4,7 +4,11 @@ namespace Generator\Factory;
 
 class TextGeneratorFactory
 {
-    public function constructTextGenerator($context)
+    /**
+     * @param array $context
+     * @return string
+     */
+    public function constructTextGenerator(array $context)
     {
         if (array_key_exists('dataSpecTest', $context)) {
             $context['class']->setDataSpecTest($context['dataSpecTest']);

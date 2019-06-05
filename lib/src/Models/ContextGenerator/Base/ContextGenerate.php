@@ -9,6 +9,12 @@ namespace Generator\Models\ContextGenerator\Base;
  *
  * @author Thomas DENEULIN <thomasdeneulin@gmail.com>
  */
-interface ManyContextGeneratorInterface
+interface ContextGenerate
 {
+    /**
+     * @param array $data
+     *
+     * @return string
+     */
+    public function generate($data): string;
 }

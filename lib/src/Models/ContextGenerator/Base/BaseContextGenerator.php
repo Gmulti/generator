@@ -3,28 +3,34 @@
 namespace Generator\Models\ContextGenerator\Base;
 
 use Generator\Helpers\Spinning;
-use Generator\Models\SpecificationServiceInterface;
-use Generator\Services\Specification;
+use Generator\Models\CanGetSpecificationFactory;
+use Generator\Services\UseSpecificationFactory;
 
-class BaseContextGenerator implements TextGeneratorInterface, ContextGeneratorInterface
+class BaseContextGenerator implements TextGenerate, ContextGenerate
 {
     protected $dataSpecTest = [];
 
     protected $text = '';
 
     /**
-     * @param SpecificationServiceInterface $specificationService
+     * @param CanGetSpecificationFactory $specificationService
      */
-    public function __construct(SpecificationServiceInterface $specificationService = null)
+    public function __construct(CanGetSpecificationFactory $specificationService = null)
     {
         if (is_null($specificationService)) {
             $this->createDefaultSpecificationService();
         }
-    }
-
+        else{
+            $this->specificationService = $specificationService;
+        }
+    }   
+    
+    /**
+     * @return void
+     */
     private function createDefaultSpecificationService()
     {
-        $this->specificationService = new Specification();
+        $this->specificationService = new UseSpecificationFactory();
     }
 
     /**

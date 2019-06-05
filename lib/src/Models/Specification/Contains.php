@@ -4,7 +4,7 @@ namespace Generator\Models\Specification;
 
 use Generator\Models\Specification\AbstractSpecification;
 
-class ContainsSpecification extends AbstractSpecification
+class Contains extends AbstractSpecification
 {  
     /**     
      * @param string $string

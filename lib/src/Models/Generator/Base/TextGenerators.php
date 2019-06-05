@@ -8,7 +8,7 @@ namespace Generator\Models\Generator\Base;
  *
  * @author Thomas DENEULIN <thomasdeneulin@gmail.com>
  */
-interface GeneratorInterface
+interface TextGenerators
 {
     /**
      *

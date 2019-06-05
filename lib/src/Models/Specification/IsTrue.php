@@ -4,7 +4,7 @@ namespace Generator\Models\Specification;
 
 use Generator\Models\Specification\AbstractSpecification;
 
-class TrueSpecification extends AbstractSpecification
+class IsTrue extends AbstractSpecification
 {
 
     /**

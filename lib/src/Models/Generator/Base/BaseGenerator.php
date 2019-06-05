@@ -5,16 +5,22 @@ namespace Generator\Models\Generator\Base;
 use Generator\Helpers\Spinning;
 use Generator\Factory\ManyContextGeneratorFactory;
 use Generator\Factory\TextGeneratorFactory;
-use Generator\Models\ContextGenerator\Base\ManyContextGeneratorInterface;
-use Generator\Models\ContextGenerator\Base\TextGeneratorInterface;
-use Generator\Models\VariableToStringServiceInterface;
+use Generator\Models\ContextGenerator\Base\BaseManyContextGenerator;
+use Generator\Models\ContextGenerator\Base\TextGenerate;
+use Generator\Models\CanReplaceVariable;
 use Generator\Services\VariableToString;
 
-class BaseGenerator implements GeneratorInterface
+class BaseGenerator implements TextGenerators
 {
     protected $textGenerators;
 
-    public function __construct(array $textGenerators = [], $factories = [], VariableToStringServiceInterface $variableToString = null)
+    /**
+     *
+     * @param array $textGenerators
+     * @param array $factories
+     * @param CanReplaceVariable $variableToString
+     */
+    public function __construct(array $textGenerators = [], $factories = [], CanReplaceVariable $variableToString = null)
     {
         $this->setTextGenerators($textGenerators);
 
@@ -33,18 +39,32 @@ class BaseGenerator implements GeneratorInterface
         if (is_null($variableToString)) {
             $this->createVariableToStringService();
         }
+        else{
+            $this->variableToString = $variableToString;
+        }
     }
 
+    /**
+     * Create default variable to string service
+     * @return void
+     */
     public function createVariableToStringService()
     {
         $this->variableToStringService = new VariableToString();
     }
 
+    /**
+     * @return void
+     */
     public function setDefaultTextGeneratorFactory()
     {
         $this->textGeneratorFactory = new TextGeneratorFactory();
     }
 
+
+    /**
+     * @return void
+     */
     public function setDefaultManyContextGeneratorFactory()
     {
         $this->manyContextGeneratorFactory = new ManyContextGeneratorFactory();
@@ -68,6 +88,9 @@ class BaseGenerator implements GeneratorInterface
         return $this->textGenerators;
     }
 
+    /**
+     * @return void
+     */
     protected function getSetupTextGenerators()
     {
         foreach ($this->getTextGenerators() as $key => $contextGenerator) {
@@ -79,9 +102,9 @@ class BaseGenerator implements GeneratorInterface
                 $contextGenerator['class'] = new $contextGenerator['class']();
             }
 
-            if ($contextGenerator['class'] instanceof ManyContextGeneratorInterface) {
+            if ($contextGenerator['class'] instanceof BaseManyContextGenerator) {
                 $contextGenerator = $this->manyContextGeneratorFactory->constructManyContextGenerator($contextGenerator);
-            } elseif ($contextGenerator['class'] instanceof TextGeneratorInterface) {
+            } elseif ($contextGenerator['class'] instanceof TextGenerate) {
                 $contextGenerator = $this->textGeneratorFactory->constructTextGenerator($contextGenerator);
             }
 

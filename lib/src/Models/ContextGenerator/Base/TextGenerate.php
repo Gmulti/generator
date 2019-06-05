@@ -9,7 +9,7 @@ namespace Generator\Models\ContextGenerator\Base;
  *
  * @author Thomas DENEULIN <thomasdeneulin@gmail.com>
  */
-interface TextGeneratorInterface
+interface TextGenerate
 {
     /**
      * @return array

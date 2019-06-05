@@ -2,10 +2,16 @@
 
 namespace Generator\Services;
 
-class VariableToString
+use Generator\Models\CanReplaceVariable;
+
+class VariableToString implements CanReplaceVariable
 {
     const REGEX = "#\[\[(.*?)\]\]#";
 
+    /**
+     * @param array $dataset
+     * @return $this
+     */
     public function setDataset($dataset)
     {
         $this->dataset = $dataset;
@@ -33,7 +39,7 @@ class VariableToString
      */
     public function getKeyValueByKeys($keys, $dataset = null)
     {
-        if ($dataset === null) {
+        if (null === $dataset) {
             $dataset = $this->dataset;
         }
 

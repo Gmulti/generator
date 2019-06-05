@@ -9,6 +9,7 @@ namespace Generator\Models;
  *
  * @author Thomas DENEULIN <thomasdeneulin@gmail.com>
  */
-interface SpecificationFactoryInterface
+interface CanGetSpecificationFactory
 {
+    public function getSpecificationFactory(): ConstructSpecification;
 }

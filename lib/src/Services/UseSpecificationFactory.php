@@ -2,21 +2,24 @@
 
 namespace Generator\Services;
 
-use Generator\Models\SpecificationFactoryInterface;
-use Generator\Models\SpecificationServiceInterface;
+use Generator\Models\ConstructSpecification;
+use Generator\Models\CanGetSpecificationFactory;
 use Generator\Factory\Specification\SpecificationFactory;
 
-class Specification implements SpecificationServiceInterface
+class UseSpecificationFactory implements CanGetSpecificationFactory
 {
     /**
-     * @param SpecificationFactoryInterface|null $factory
+     * @param ConstructSpecification|null $factory
      */
-    public function __construct(SpecificationFactoryInterface $factory = null)
+    public function __construct(ConstructSpecification $factory = null)
     {
         $this->specificationFactory = $factory;
         $this->createDefaultSpecificationFoot();
     }
 
+    /**
+     * @return void
+     */
     public function createDefaultSpecificationFoot()
     {
         $files = array_diff(scandir(__DIR__.'/../Models/SpecificationFoot'), ['..', '.']);
@@ -33,9 +36,9 @@ class Specification implements SpecificationServiceInterface
     }
 
     /**
-     * @return SpecificationFactoryInterface
+     * @return ConstructSpecification
      */
-    public function getSpecificationFactory(): SpecificationFactoryInterface
+    public function getSpecificationFactory(): ConstructSpecification
     {
         if (is_null($this->specificationFactory)) {
             $this->specificationFactory = $this->createDefaultSpecificationFactory();
@@ -47,17 +50,17 @@ class Specification implements SpecificationServiceInterface
     /**
      * @return SpecificationFactory
      */
-    protected function createDefaultSpecificationFactory(): SpecificationFactoryInterface
+    protected function createDefaultSpecificationFactory(): ConstructSpecification
     {
         return new SpecificationFactory();
     }
 
     /**
-     * @param SpecificationFactoryInterface $factory
+     * @param ConstructSpecification $factory
      *
      * @return Specification
      */
-    public function setFactory(SpecificationFactoryInterface $factory)
+    public function setSpecificationFactory(ConstructSpecification $factory)
     {
         $this->specificationFactory = $factory;
 
@@ -67,7 +70,7 @@ class Specification implements SpecificationServiceInterface
     /**
      * @param array $data
      *
-     * @return Generator\Models\SpecificationFactoryInterface
+     * @return Generator\Models\ConstructSpecification
      */
     public function constructSpecification($data)
     {

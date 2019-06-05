@@ -9,7 +9,7 @@ namespace Generator\Models;
  *
  * @author Thomas DENEULIN <thomasdeneulin@gmail.com>
  */
-interface VariableToStringServiceInterface
+interface CanReplaceVariable
 {
     public function getVariables($string): array;
 
