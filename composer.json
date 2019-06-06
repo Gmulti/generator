@@ -1,5 +1,6 @@
 {
     "name": "gmulti/generator",
+    "description": "Agnostic text generator",
     "type": "library",
     "authors" :[{"name": "Thomas Deneulin", "email":"thomasdeneulin@gmail.com"}],
     "require": {
