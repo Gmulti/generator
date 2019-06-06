@@ -80,7 +80,10 @@ class BaseContextGenerator implements TextGenerate, ContextGenerate
         return $this->text;
     }
 
-    public function countWords()
+    /**
+     * @return integer
+     */
+    public function countWords() : int
     {
         return str_word_count(Spinning::process($this->getText()));
     }

@@ -20,7 +20,7 @@ class BaseGenerator implements TextGenerators
      * @param array $factories
      * @param CanReplaceVariable $variableToString
      */
-    public function __construct(array $textGenerators = [], $factories = [], CanReplaceVariable $variableToString = null)
+    public function __construct(array $textGenerators = [], $factories = [], ?CanReplaceVariable $variableToString = null)
     {
         $this->setTextGenerators($textGenerators);
 
@@ -37,7 +37,7 @@ class BaseGenerator implements TextGenerators
         }
 
         if (is_null($variableToString)) {
-            $this->createVariableToStringService();
+            $this->setDefaultVariableToStringService();
         }
         else{
             $this->variableToString = $variableToString;
@@ -48,7 +48,7 @@ class BaseGenerator implements TextGenerators
      * Create default variable to string service
      * @return void
      */
-    public function createVariableToStringService()
+    public function setDefaultVariableToStringService() : void
     {
         $this->variableToStringService = new VariableToString();
     }
@@ -56,7 +56,7 @@ class BaseGenerator implements TextGenerators
     /**
      * @return void
      */
-    public function setDefaultTextGeneratorFactory()
+    public function setDefaultTextGeneratorFactory() : void
     {
         $this->textGeneratorFactory = new TextGeneratorFactory();
     }
@@ -65,13 +65,14 @@ class BaseGenerator implements TextGenerators
     /**
      * @return void
      */
-    public function setDefaultManyContextGeneratorFactory()
+    public function setDefaultManyContextGeneratorFactory() : void
     {
         $this->manyContextGeneratorFactory = new ManyContextGeneratorFactory();
     }
 
     /**
      * @param array $textGenerators
+     * @return $this
      */
     public function setTextGenerators(array $textGenerators)
     {
@@ -115,7 +116,7 @@ class BaseGenerator implements TextGenerators
     /**
      * @return int
      */
-    public function countWords()
+    public function countWords() : int
     {
         $count = 0;
         foreach ($this->getSetupTextGenerators() as $key => $textGenerator) {
