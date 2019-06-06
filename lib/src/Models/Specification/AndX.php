@@ -1,31 +1,27 @@
 <?php
+
 namespace Generator\Models\Specification;
-
-
-use Generator\Models\Specification\AbstractSpecification;
 
 /**
  * @version 1.0.0
+ *
  * @since 1.0.0
- * 
- * @author Thomas DENEULIN <thomasdeneulin@gmail.com> 
+ *
+ * @author Thomas DENEULIN <thomasdeneulin@gmail.com>
  */
 class AndX extends AbstractSpecification
 {
     /**
-     *
      * @var SpecificationInterface
      */
     protected $left;
-    
+
     /**
-     *
      * @var SpecificationInterface
      */
     protected $right;
 
     /**
-     *
      * @param SpecificationInterface $left
      * @param SpecificationInterface $right
      */
@@ -36,7 +32,6 @@ class AndX extends AbstractSpecification
     }
 
     /**
-     *
      * @param $item
      *
      * @return bool

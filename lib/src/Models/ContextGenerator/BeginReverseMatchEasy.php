@@ -15,7 +15,7 @@ class BeginReverseMatchEasy extends BaseContextGenerator
             ],
             [
                 'condition_test' => 'SubstractHomeToVisitorGreaterPosition',
-                'value' => 10,
+                'value'          => 10,
             ],
         ],
     ];

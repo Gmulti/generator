@@ -1,13 +1,13 @@
 <?php
-namespace Generator\Models\Specification;
 
-use Generator\Models\Specification\AbstractSpecification;
+namespace Generator\Models\Specification;
 
 /**
  * @version 1.0.0
+ *
  * @since 1.0.0
- * 
- * @author Thomas DENEULIN <thomasdeneulin@gmail.com> 
+ *
+ * @author Thomas DENEULIN <thomasdeneulin@gmail.com>
  */
 class NotX extends AbstractSpecification
 {
@@ -17,7 +17,6 @@ class NotX extends AbstractSpecification
     protected $specification;
 
     /**
-     *
      * @param SpecificationInterface $specification
      */
     public function __construct(SpecificationInterface $specification)
@@ -26,7 +25,6 @@ class NotX extends AbstractSpecification
     }
 
     /**
-     *
      * @param $item
      *
      * @return bool

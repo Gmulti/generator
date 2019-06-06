@@ -13,10 +13,10 @@ class SpecificationFactory implements SpecificationConditionTest, ConstructSpeci
 {
     public function __construct()
     {
-        $this->conditionTest = array(
-            'equals' => "\Generator\Models\Specification\Equals",
+        $this->conditionTest = [
+            'equals'   => "\Generator\Models\Specification\Equals",
             'contains' => "\Generator\Models\Specification\Contains",
-        );
+        ];
     }
 
     /**
@@ -35,7 +35,7 @@ class SpecificationFactory implements SpecificationConditionTest, ConstructSpeci
     /**
      * @return array
      */
-    public function getConditionsTest() : array
+    public function getConditionsTest(): array
     {
         return $this->conditionTest;
     }
@@ -45,9 +45,9 @@ class SpecificationFactory implements SpecificationConditionTest, ConstructSpeci
      *
      * @return Specification
      */
-    public function constructSpecification($data) : AbstractSpecification
+    public function constructSpecification($data): AbstractSpecification
     {
-        $arraySpec = array();
+        $arraySpec = [];
 
         foreach ($data as $keyOr => $valueOr) {
             foreach ($valueOr as $keyAnd => $valueAnd) {
@@ -61,6 +61,7 @@ class SpecificationFactory implements SpecificationConditionTest, ConstructSpeci
         }
 
         $specification = $this->constructOrSpecification($arraySpec);
+
         return $specification;
     }
 

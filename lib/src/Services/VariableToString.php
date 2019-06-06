@@ -10,6 +10,7 @@ class VariableToString implements CanReplaceVariable
 
     /**
      * @param array $dataset
+     *
      * @return $this
      */
     public function setDataset($dataset)

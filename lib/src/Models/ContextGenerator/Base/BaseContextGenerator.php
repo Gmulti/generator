@@ -15,19 +15,15 @@ class BaseContextGenerator implements TextGenerate, ContextGenerate
     /**
      * @param CanGetSpecificationFactory $specificationService
      */
-    public function __construct(CanGetSpecificationFactory $specificationService = null)
+    public function __construct(?CanGetSpecificationFactory $specificationService = null)
     {
         if (is_null($specificationService)) {
             $this->createDefaultSpecificationService();
-        }
-        else{
+        } else {
             $this->specificationService = $specificationService;
         }
-    }   
-    
-    /**
-     * @return void
-     */
+    }
+
     private function createDefaultSpecificationService()
     {
         $this->specificationService = new UseSpecificationFactory();

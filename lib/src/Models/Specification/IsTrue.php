@@ -2,15 +2,12 @@
 
 namespace Generator\Models\Specification;
 
-use Generator\Models\Specification\AbstractSpecification;
-
 class IsTrue extends AbstractSpecification
 {
-
     /**
-     *
      * @param string $item
-     * @return boolean
+     *
+     * @return bool
      */
     public function isSatisfedBy($item)
     {

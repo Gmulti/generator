@@ -2,25 +2,26 @@
 
 namespace Generator\Models\Specification;
 
-use Generator\Models\Specification\AbstractSpecification;
-
 class Contains extends AbstractSpecification
-{  
-    /**     
+{
+    /**
      * @param string $string
      */
-    public function __construct($string){
+    public function __construct($string)
+    {
         $this->string = $string;
     }
 
-    /** 
+    /**
      * @param string $item
-     * @return boolean
+     *
+     * @return bool
      */
-    public function isSatisfedBy($item){    
+    public function isSatisfedBy($item)
+    {
         $pos = strpos($this->string, $item);
 
-        if ($pos === false) {
+        if (false === $pos) {
             return false;
         } else {
             return true;

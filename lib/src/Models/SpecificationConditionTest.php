@@ -11,7 +11,7 @@ namespace Generator\Models;
  */
 interface SpecificationConditionTest
 {
-     /**
+    /**
      * @param string $key
      * @param string $label
      */
@@ -20,5 +20,5 @@ interface SpecificationConditionTest
     /**
      * @return array
      */
-    public function getConditionsTest() : array;
+    public function getConditionsTest(): array;
 }

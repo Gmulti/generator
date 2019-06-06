@@ -3,10 +3,11 @@
 namespace Generator\Factory;
 
 class ManyContextGeneratorFactory
-{   
+{
     /**
      * @param array $contextMany
-     * @return Object
+     *
+     * @return object
      */
     public function constructManyContextGenerator($contextMany)
     {

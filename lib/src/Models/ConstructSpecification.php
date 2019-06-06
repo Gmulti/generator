@@ -15,8 +15,8 @@ interface ConstructSpecification
 {
     /**
      * @param array $data
+     *
      * @return AbstractSpecification
      */
-    public function constructSpecification($data) : AbstractSpecification;
-
+    public function constructSpecification($data): AbstractSpecification;
 }

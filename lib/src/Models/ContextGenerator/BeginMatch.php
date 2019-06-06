@@ -12,7 +12,7 @@ class BeginMatch extends BaseContextGenerator
         [
             [
                 'condition_test' => 'ReverseMatch',
-                'invert' => true,
+                'invert'         => true,
             ],
         ],
     ];

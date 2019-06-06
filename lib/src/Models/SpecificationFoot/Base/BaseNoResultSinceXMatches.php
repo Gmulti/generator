@@ -27,6 +27,6 @@ class BaseNoResultSinceXMatches extends AbstractSpecification
     {
         $recentForm = str_split($item[$this->typeTeam]['recent_form'], $this->string)[0];
 
-        return strpos($recentForm, $this->typeResult) === false;
+        return false === strpos($recentForm, $this->typeResult);
     }
 }

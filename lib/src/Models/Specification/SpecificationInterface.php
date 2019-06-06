@@ -4,14 +4,16 @@ namespace Generator\Models\Specification;
 
 /**
  * @version 1.0.0
+ *
  * @since 1.0.0
- * 
- * @author Thomas DENEULIN <thomasdeneulin@gmail.com> 
+ *
+ * @author Thomas DENEULIN <thomasdeneulin@gmail.com>
  */
 interface SpecificationInterface
 {
     /**
      * @version 1.0.0
+     *
      * @since 1.0.0
      *
      * @return bool
@@ -20,6 +22,7 @@ interface SpecificationInterface
 
     /**
      * @version 1.0.0
+     *
      * @since 1.0.0
      *
      * @param SpecificationInterface $spec
@@ -28,6 +31,7 @@ interface SpecificationInterface
 
     /**
      * @version 1.0.0
+     *
      * @since 1.0.0
      *
      * @param SpecificationInterface $spec
@@ -36,6 +40,7 @@ interface SpecificationInterface
 
     /**
      * @version 1.0.0
+     *
      * @since 1.0.0
      */
     public function notX();

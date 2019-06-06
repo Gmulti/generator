@@ -6,6 +6,7 @@ class TextGeneratorFactory
 {
     /**
      * @param array $context
+     *
      * @return string
      */
     public function constructTextGenerator(array $context)

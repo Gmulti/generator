@@ -19,6 +19,6 @@ class BaseTeamHasNeverX extends AbstractSpecification
      */
     public function isSatisfedBy($item)
     {
-        return $this[$this->typeTeam]['overall'][$this->typeResult] === 0;
+        return 0 === $this[$this->typeTeam]['overall'][$this->typeResult];
     }
 }

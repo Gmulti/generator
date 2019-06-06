@@ -8,6 +8,7 @@ class BaseManyContextGenerator implements ContextGenerate
 
     /**
      * @param array $data
+     *
      * @return string
      */
     public function generate($data): string

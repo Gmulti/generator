@@ -1,21 +1,17 @@
 <?php
-namespace Generator\Models\Specification;
 
-use Generator\Models\Specification\SpecificationInterface;
-use Generator\Models\Specification\AndX;
-use Generator\Models\Specification\OrX;
-use Generator\Models\Specification\NotX;
+namespace Generator\Models\Specification;
 
 /**
  * @version 1.0.0
+ *
  * @since 1.0.0
- * 
- * @author Thomas DENEULIN <thomasdeneulin@gmail.com> 
+ *
+ * @author Thomas DENEULIN <thomasdeneulin@gmail.com>
  */
 abstract class AbstractSpecification implements SpecificationInterface
 {
     /**
-     *
      * @param $item
      *
      * @return bool
@@ -23,7 +19,6 @@ abstract class AbstractSpecification implements SpecificationInterface
     abstract public function isSatisfedBy($item);
 
     /**
-     *
      * @param SpecificationInterface $spec
      *
      * @return SpecificationInterface
@@ -34,7 +29,6 @@ abstract class AbstractSpecification implements SpecificationInterface
     }
 
     /**
-     *
      * @param SpecificationInterface $spec
      *
      * @return SpecificationInterface
@@ -45,7 +39,6 @@ abstract class AbstractSpecification implements SpecificationInterface
     }
 
     /**
-     *
      * @return SpecificationInterface
      */
     public function notX()

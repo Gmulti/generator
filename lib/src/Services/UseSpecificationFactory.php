@@ -17,18 +17,15 @@ class UseSpecificationFactory implements CanGetSpecificationFactory
         $this->createDefaultSpecificationFoot();
     }
 
-    /**
-     * @return void
-     */
     public function createDefaultSpecificationFoot()
     {
-        $files = array_diff(scandir(__DIR__.'/../Models/SpecificationFoot'), ['..', '.']);
+        $files = array_diff(scandir(__DIR__ . '/../Models/SpecificationFoot'), ['..', '.']);
         foreach ($files as $filename) {
             $file = str_replace('.php', '', $filename);
-            $class = '\\Generator\\Models\\SpecificationFoot\\'.$file;
+            $class = '\\Generator\\Models\\SpecificationFoot\\' . $file;
 
             $name = $file;
-            if (defined($class.'::NAME')) {
+            if (defined($class . '::NAME')) {
                 $name = $class::NAME;
             }
             $this->getSpecificationFactory()->setConditionTest($name, $class);

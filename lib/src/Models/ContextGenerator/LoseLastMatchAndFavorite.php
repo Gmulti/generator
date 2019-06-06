@@ -12,7 +12,7 @@ class LoseLastMatchAndFavorite extends BaseContextGenerator
         [
             [
                 'condition_test' => 'LoseInRowHomeTeam',
-                'value' => 1,
+                'value'          => 1,
             ],
         ],
     ];

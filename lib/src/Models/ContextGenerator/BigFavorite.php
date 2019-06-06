@@ -12,7 +12,7 @@ class BigFavorite extends BaseContextGenerator
         [
             [
                 'condition_test' => 'WinInRowHomeTeam',
-                'value' => 3,
+                'value'          => 3,
             ],
         ],
     ];
