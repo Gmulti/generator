@@ -9,6 +9,8 @@ php:
   - '7.2'
   - '7.3'
 
+install:
+  - $COMPOSER_UP
 
 script:
   - composer validate --no-check-lock
