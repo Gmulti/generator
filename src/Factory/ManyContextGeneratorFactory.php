@@ -9,7 +9,7 @@ class ManyContextGeneratorFactory
      *
      * @return object
      */
-    public function constructManyContextGenerator($contextMany)
+    public function constructManyContextGenerator(array $contextMany)
     {
         if (array_key_exists('contexts', $contextMany)) {
             $contextMany['class']->setContexts($contextMany['contexts']);
