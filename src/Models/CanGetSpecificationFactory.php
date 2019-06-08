@@ -11,5 +11,5 @@ namespace Generator\Models;
  */
 interface CanGetSpecificationFactory
 {
-    public function getSpecificationFactory(): ConstructSpecification;
+    public function getSpecificationFactory(): CanConstructSpecification;
 }

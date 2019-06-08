@@ -2,7 +2,7 @@
 
 namespace Generator\Models\Specification;
 
-class StricklyLessThan extends AbstractSpecification
+class LesserThan extends AbstractSpecification
 {
     /**
      * @param string $item
@@ -11,6 +11,6 @@ class StricklyLessThan extends AbstractSpecification
      */
     public function isSatisfedBy($item)
     {
-        return $this->string < $item;
+        return $this->string <= $item;
     }
 }

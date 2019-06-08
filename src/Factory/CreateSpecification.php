@@ -1,21 +1,26 @@
 <?php
 
-namespace Generator\Factory\Specification;
+namespace Generator\Factory;
 
 use Generator\Models\SpecificationConditionTest;
-use Generator\Models\ConstructSpecification;
+use Generator\Models\CanConstructSpecification;
 use Generator\Models\Specification\AbstractSpecification;
 use Generator\Models\Specification\NotX;
 use Generator\Models\Specification\OrX;
 use Generator\Models\Specification\AndX;
 
-class SpecificationFactory implements SpecificationConditionTest, ConstructSpecification
+class CreateSpecification implements SpecificationConditionTest, CanConstructSpecification
 {
     public function __construct()
     {
         $this->conditionTest = [
             'equals'   => "\Generator\Models\Specification\Equals",
             'contains' => "\Generator\Models\Specification\Contains",
+            'greater_than'  => "\Generator\Models\Specification\GreaterThan",
+            'strickly_greater_than'  => "\Generator\Models\Specification\StricklyGreaterThan",
+            'lesser_than'  => "\Generator\Models\Specification\LesserThan",
+            'strickly_lesser_than'  => "\Generator\Models\Specification\StricklyLesserThan",
+            'is_true' => "\Generator\Models\Specification\IsTrue",
         ];
     }
 
@@ -23,7 +28,7 @@ class SpecificationFactory implements SpecificationConditionTest, ConstructSpeci
      * @param string $key
      * @param string $label
      *
-     * @return SpecificationFactory
+     * @return CreateSpecification
      */
     public function setConditionTest($key, $label)
     {

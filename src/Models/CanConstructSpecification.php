@@ -11,7 +11,7 @@ use Generator\Models\Specification\AbstractSpecification;
  *
  * @author Thomas DENEULIN <thomasdeneulin@gmail.com>
  */
-interface ConstructSpecification
+interface CanConstructSpecification
 {
     /**
      * @param array $data

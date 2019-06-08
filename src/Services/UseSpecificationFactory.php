@@ -2,16 +2,16 @@
 
 namespace Generator\Services;
 
-use Generator\Models\ConstructSpecification;
+use Generator\Models\CanConstructSpecification;
 use Generator\Models\CanGetSpecificationFactory;
-use Generator\Factory\Specification\SpecificationFactory;
+use Generator\Factory\CreateSpecification;
 
 class UseSpecificationFactory implements CanGetSpecificationFactory
 {
     /**
-     * @param ConstructSpecification|null $factory
+     * @param CanConstructSpecification|null $factory
      */
-    public function __construct(ConstructSpecification $factory = null)
+    public function __construct(CanConstructSpecification $factory = null)
     {
         $this->specificationFactory = $factory;
         $this->createDefaultSpecificationFoot();
@@ -33,9 +33,9 @@ class UseSpecificationFactory implements CanGetSpecificationFactory
     }
 
     /**
-     * @return ConstructSpecification
+     * @return CanConstructSpecification
      */
-    public function getSpecificationFactory(): ConstructSpecification
+    public function getSpecificationFactory(): CanConstructSpecification
     {
         if (is_null($this->specificationFactory)) {
             $this->specificationFactory = $this->createDefaultSpecificationFactory();
@@ -45,19 +45,19 @@ class UseSpecificationFactory implements CanGetSpecificationFactory
     }
 
     /**
-     * @return SpecificationFactory
+     * @return CreateSpecification
      */
-    protected function createDefaultSpecificationFactory(): ConstructSpecification
+    protected function createDefaultSpecificationFactory(): CanConstructSpecification
     {
-        return new SpecificationFactory();
+        return new CreateSpecification();
     }
 
     /**
-     * @param ConstructSpecification $factory
+     * @param CanConstructSpecification $factory
      *
      * @return Specification
      */
-    public function setSpecificationFactory(ConstructSpecification $factory)
+    public function setSpecificationFactory(CanConstructSpecification $factory)
     {
         $this->specificationFactory = $factory;
 
@@ -67,7 +67,7 @@ class UseSpecificationFactory implements CanGetSpecificationFactory
     /**
      * @param array $data
      *
-     * @return Generator\Models\ConstructSpecification
+     * @return Generator\Models\CanConstructSpecification
      */
     public function constructSpecification($data)
     {
