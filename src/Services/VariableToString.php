@@ -60,7 +60,7 @@ class VariableToString implements CanReplaceVariable
      *
      * @return string
      */
-    public function replace($string)
+    public function replace($string) : string
     {
         $variables = $this->getVariables($string);
 
