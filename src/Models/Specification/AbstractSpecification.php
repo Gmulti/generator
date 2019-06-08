@@ -12,6 +12,14 @@ namespace Generator\Models\Specification;
 abstract class AbstractSpecification implements SpecificationInterface
 {
     /**
+     * @param string $string
+     */
+    public function __construct($string)
+    {
+        $this->string = $string;
+    }
+
+    /**
      * @param $item
      *
      * @return bool
