@@ -1,6 +1,6 @@
 # Generator
 
-[![Travis](https://img.shields.io/travis/com/Gmulti/generator/master.svg?style=for-the-badge)][travis-url]
+[![Travis](https://api.travis-ci.com/Gmulti/generator.svg?token=sLzppsjhxK3yUwCEPZpF&branch=master)][travis-url]
 
 
 ---

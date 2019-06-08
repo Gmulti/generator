@@ -33,6 +33,8 @@ class VariableToString implements CanReplaceVariable
     }
 
     /**
+     * [[home#labels#name]] => $data["home"]["labels"]["name"]
+     * 
      * @param string $array
      * @param string $dataset
      *
