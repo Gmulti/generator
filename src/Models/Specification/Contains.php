@@ -11,11 +11,12 @@ class Contains extends AbstractSpecification
      */
     public function isSatisfedBy($item)
     {
-        if (is_int($item)) {
+        $value = $this->getValueTestFromItem($item);
+        if (is_int($value)) {
             return false;
         }
 
-        $pos = strpos($this->string, $item);
+        $pos = strpos($this->string, $value);
 
         if (false === $pos) {
             return false;

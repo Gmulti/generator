@@ -11,6 +11,6 @@ class StricklyGreaterThan extends AbstractSpecification
      */
     public function isSatisfedBy($item)
     {
-        return $this->string > $item;
+        return $this->string > $this->getValueTestFromItem($item);
     }
 }

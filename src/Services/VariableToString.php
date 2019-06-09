@@ -33,8 +33,8 @@ class VariableToString implements CanReplaceVariable
     }
 
     /**
-     * [[home#labels#name]] => $data["home"]["labels"]["name"]
-     * 
+     * [[home#labels#name]] => $data["home"]["labels"]["name"].
+     *
      * @param string $array
      * @param string $dataset
      *
@@ -46,7 +46,7 @@ class VariableToString implements CanReplaceVariable
             $dataset = $this->dataset;
         }
 
-        if (array_key_exists(0, $keys)) {
+        if (array_key_exists(0, $keys) && array_key_exists($keys[0], $dataset)) {
             $dataset = $dataset[$keys[0]];
             unset($keys[0]);
             $keys = array_values($keys);
@@ -58,11 +58,21 @@ class VariableToString implements CanReplaceVariable
     }
 
     /**
+     * @param string $variable
+     */
+    public function getValueByVariableFromDataSet(string $variable)
+    {
+        $keys = explode('#', $variable);
+
+        return $this->getKeyValueByKeys($keys);
+    }
+
+    /**
      * @param string $string
      *
      * @return string
      */
-    public function replace($string) : string
+    public function replace($string): string
     {
         $variables = $this->getVariables($string);
 
@@ -71,8 +81,11 @@ class VariableToString implements CanReplaceVariable
         }
 
         foreach ($variables[1] as $key => $variable) {
-            $keys = explode('#', $variable);
-            $value = $this->getKeyValueByKeys($keys);
+            $value = $this->getValueByVariableFromDataSet($variable);
+            if (!is_string($value)) {
+                continue;
+            }
+
             $string = str_replace($variables[0][$key], $value, $string);
         }
 

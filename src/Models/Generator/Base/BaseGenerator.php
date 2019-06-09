@@ -105,7 +105,7 @@ class BaseGenerator implements TextGenerators
     {
         if (!array_key_exists('class', $context) && !array_key_exists('contexts', $context)) {
             $context['class'] = $this->getClassDefaultContextGenerator();
-        } elseif (array_key_exists('contexts', $context)) {
+        } elseif (!array_key_exists('class', $context) && array_key_exists('contexts', $context)) {
             $context['class'] = $this->getClassDefaultManyContextGenerator();
         }
 
@@ -124,7 +124,14 @@ class BaseGenerator implements TextGenerators
             if ($contextGenerator['class'] instanceof ManyContextGenerator) {
                 $contextGenerator = $this->manyContextGeneratorFactory->constructManyContextGenerator($contextGenerator);
                 foreach ($contextGenerator->getContexts() as $key => $context) {
-                    $context = $this->constructContextGenerator($context);
+                    $prepareContext = [];
+                    if (is_string($context)) {
+                        $prepareContext['class'] = $context;
+                    } else {
+                        $prepareContext = $context;
+                    }
+
+                    $context = $this->constructContextGenerator($prepareContext);
                     $contextGenerator->setContextGeneratorByKey($key, $this->textGeneratorFactory->constructTextGenerator($context));
                 }
             } elseif ($contextGenerator['class'] instanceof TextGenerate) {

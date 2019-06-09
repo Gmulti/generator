@@ -2,6 +2,8 @@
 
 namespace Generator\Models\Specification;
 
+use Generator\Services\VariableToString;
+
 /**
  * @version 1.0.0
  *
@@ -11,12 +13,62 @@ namespace Generator\Models\Specification;
  */
 abstract class AbstractSpecification implements SpecificationInterface
 {
+    protected $variable = null;
+
     /**
      * @param string $string
      */
-    public function __construct($string)
+    public function __construct($string, $variableToString = null)
     {
         $this->string = $string;
+
+        if (is_null($variableToString)) {
+            $this->setDefaultVariableToStringService();
+        } else {
+            $this->variableToString = $variableToString;
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function setDefaultVariableToStringService(): void
+    {
+        $this->variableToStringService = new VariableToString();
+    }
+
+    /**
+     * @param string $variable
+     *
+     * @return void
+     */
+    public function setVariable(string $variable)
+    {
+        $this->variable = $variable;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function hasAVariable(): bool
+    {
+        return !is_null($this->variable);
+    }
+
+    /**
+     * @param any $item
+     *
+     * @return any
+     */
+    public function getValueTestFromItem($item)
+    {
+        if ($this->hasAVariable()) {
+            return $this->variableToStringService->setDataSet($item)->getValueByVariableFromDataSet($this->variable);
+        }
+
+        return $item;
     }
 
     /**

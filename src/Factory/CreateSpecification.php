@@ -21,6 +21,7 @@ class CreateSpecification implements SpecificationConditionTest, CanConstructSpe
             'lesser_than'            => "\Generator\Models\Specification\LesserThan",
             'strickly_lesser_than'   => "\Generator\Models\Specification\StricklyLesserThan",
             'is_true'                => "\Generator\Models\Specification\IsTrue",
+            'in_list'                => "\Generator\Models\Specification\InList",
         ];
     }
 
@@ -46,6 +47,16 @@ class CreateSpecification implements SpecificationConditionTest, CanConstructSpe
     }
 
     /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function conditionExist(string $key): bool
+    {
+        return array_key_exists($key, $this->conditionTest);
+    }
+
+    /**
      * @param array $data
      *
      * @return Specification
@@ -57,11 +68,19 @@ class CreateSpecification implements SpecificationConditionTest, CanConstructSpe
         foreach ($data as $keyOr => $valueOr) {
             foreach ($valueOr as $keyAnd => $valueAnd) {
                 $invert = $valueAnd['invert'] ?? false;
+                $variable = $valueAnd['variable'] ?? false;
+
                 if (!array_key_exists('value', $valueAnd)) {
-                    $arraySpec[$keyOr][] = $this->getSpecificationFromConditionTest($valueAnd['condition_test'], null, $invert);
+                    $newSpec = $this->getSpecificationFromConditionTest($valueAnd['condition_test'], null, $invert);
                 } else {
-                    $arraySpec[$keyOr][] = $this->getSpecificationFromConditionTest($valueAnd['condition_test'], $valueAnd['value'], $invert);
+                    $newSpec = $this->getSpecificationFromConditionTest($valueAnd['condition_test'], $valueAnd['value'], $invert);
                 }
+
+                if ($variable) {
+                    $newSpec->setVariable($variable);
+                }
+
+                $arraySpec[$keyOr][] = $newSpec;
             }
         }
 
@@ -129,18 +148,19 @@ class CreateSpecification implements SpecificationConditionTest, CanConstructSpe
      */
     public function getSpecificationFromConditionTest($conditionTest, $value = null, $invert = false)
     {
-        if (is_string($conditionTest)) {
-            if (!array_key_exists($conditionTest, $this->conditionTest)) {
-                return false;
-            }
+        if (!is_string($conditionTest)) {
+            throw new \Exception('Condition test not a string');
+        }
+        if (!$this->conditionExist($conditionTest)) {
+            throw new \Exception('Specification not exist');
+        }
 
-            $classSpecification = $this->conditionTest[$conditionTest];
+        $classSpecification = $this->conditionTest[$conditionTest];
 
-            if ($invert) {
-                $spec = new NotX(new $classSpecification($value));
-            } else {
-                $spec = new $classSpecification($value);
-            }
+        if ($invert) {
+            $spec = new NotX(new $classSpecification($value));
+        } else {
+            $spec = new $classSpecification($value);
         }
 
         // @TODO : CALLBACK

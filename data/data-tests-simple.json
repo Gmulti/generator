@@ -1,0 +1,11 @@
+{
+    "home_team" : {
+        "position" : 3,
+        "league_ids" : ["FR", "EN"],
+        "league_names" : {
+            "fr" : {
+                "title" : "Française"
+            }
+        }
+    }
+}

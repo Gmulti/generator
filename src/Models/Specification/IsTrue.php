@@ -4,7 +4,6 @@ namespace Generator\Models\Specification;
 
 class IsTrue extends AbstractSpecification
 {
-
     /**
      * @param string $item
      *
@@ -12,6 +11,6 @@ class IsTrue extends AbstractSpecification
      */
     public function isSatisfedBy($item)
     {
-        return true === boolval($item);
+        return true === boolval($this->getValueTestFromItem($item));
     }
 }
