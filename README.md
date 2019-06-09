@@ -8,4 +8,9 @@
 ## Getting started
 
 
+### Tests
+
+`./vendor/bin/phpunit --bootstrap vendor/autoload.php tests`
+
+
 [travis-url]: https://travis-ci.com/Gmulti/generator
