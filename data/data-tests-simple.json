@@ -1,10 +1,29 @@
 {
     "home_team" : {
         "position" : 3,
-        "league_ids" : ["FR", "EN"],
+        "league_ids" : 1,
+        "name" : "Olympique Lyonnais",
+        "players" : ["Thor", "Hulk"],
         "league_names" : {
             "fr" : {
                 "title" : "Française"
+            },
+            "en" : {
+                "title" : "Frenchies"
+            }
+        }
+    },
+    "visitor_team" : {
+        "position" : 20,
+        "league_id" : 1,
+        "name" : "Angers",
+        "players" : ["Spiderman", "Iron Man"],
+        "league_names" : {
+            "fr" : {
+                "title" : "Française"
+            },
+            "en" : {
+                "title" : "Frenchies"
             }
         }
     }

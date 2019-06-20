@@ -16,13 +16,13 @@ final class ContextWithInListSpecTest extends TestCase
     {
         $generators = [
             [
-                'text'         => 'Dans la bonne ligue [[home_team#league_names#fr#title]]',
+                'text'         => '[[home_team#name]] Joue avec Hulk',
                 'dataSpecTest' => [
                     [
                         [
                             'condition_test' => 'in_list',
-                            'value'          => 'FR',
-                            'variable'       => 'home_team#league_ids',
+                            'value'          => 'Hulk',
+                            'variable'       => 'home_team#players',
                         ],
                     ],
                 ],
@@ -30,20 +30,21 @@ final class ContextWithInListSpecTest extends TestCase
         ];
 
         $text = (new BaseGenerator($generators))->generate($this->data);
-        $this->assertEquals('Dans la bonne ligue Française', $text);
+
+        $this->assertEquals('Olympique Lyonnais Joue avec Hulk', $text);
     }
 
     public function testDataSpecInListIsNotValid(): void
     {
         $generators = [
             [
-                'text'         => 'Dans la bonne ligue [[home_team#league_names#fr#title]]',
+                'text'         => '[[home_team#name]] Joue avec Iron Man',
                 'dataSpecTest' => [
                     [
                         [
                             'condition_test' => 'in_list',
-                            'value'          => 'AL',
-                            'variable'       => 'home_team#league_ids',
+                            'value'          => 'Iron Man',
+                            'variable'       => 'home_team#players',
                         ],
                     ],
                 ],
