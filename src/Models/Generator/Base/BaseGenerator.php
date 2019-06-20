@@ -165,9 +165,9 @@ class BaseGenerator implements TextGenerators
         $str = '';
         foreach ($this->getSetupTextGenerators() as $key => $textGenerator) {
             if (array_key_exists('data', $textGenerator)) {
-                $str .= $textGenerator->generate($textGenerator['data']);
+                $str .= ' ' . $textGenerator->generate($textGenerator['data']);
             } else {
-                $str .= $textGenerator->generate($data);
+                $str .= ' ' . $textGenerator->generate($data);
             }
         }
 

@@ -14,14 +14,15 @@ class CreateSpecification implements SpecificationConditionTest, CanConstructSpe
     public function __construct()
     {
         $this->conditionTest = [
-            'equals'                 => "\Generator\Models\Specification\Equals",
-            'contains'               => "\Generator\Models\Specification\Contains",
-            'greater_than'           => "\Generator\Models\Specification\GreaterThan",
-            'strickly_greater_than'  => "\Generator\Models\Specification\StricklyGreaterThan",
-            'lesser_than'            => "\Generator\Models\Specification\LesserThan",
-            'strickly_lesser_than'   => "\Generator\Models\Specification\StricklyLesserThan",
-            'is_true'                => "\Generator\Models\Specification\IsTrue",
-            'in_list'                => "\Generator\Models\Specification\InList",
+            'equals'                  => "\Generator\Models\Specification\Equals",
+            'contains'                => "\Generator\Models\Specification\Contains",
+            'greater_than'            => "\Generator\Models\Specification\GreaterThan",
+            'strickly_greater_than'   => "\Generator\Models\Specification\StricklyGreaterThan",
+            'lesser_than'             => "\Generator\Models\Specification\LesserThan",
+            'strickly_lesser_than'    => "\Generator\Models\Specification\StricklyLesserThan",
+            'is_true'                 => "\Generator\Models\Specification\IsTrue",
+            'in_list'                 => "\Generator\Models\Specification\InList",
+            'is_empty'                => "\Generator\Models\Specification\IsEmpty",
         ];
     }
 

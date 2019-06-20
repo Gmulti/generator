@@ -82,7 +82,7 @@ class VariableToString implements CanReplaceVariable
 
         foreach ($variables[1] as $key => $variable) {
             $value = $this->getValueByVariableFromDataSet($variable);
-            if (!is_string($value)) {
+            if (!is_string($value) && !is_int($value)) {
                 continue;
             }
 
