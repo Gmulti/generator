@@ -71,6 +71,10 @@ class VariableToString implements CanReplaceVariable
         }
 
         $keys = explode('#', $variable);
+        
+        if(empty($keys[0])){
+            array_shift($keys);
+        }
 
         return $this->getKeyValueByKeys($keys);
     }

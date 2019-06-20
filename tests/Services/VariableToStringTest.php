@@ -11,7 +11,7 @@ final class VariableToStringTest extends TestCase
 
     public function testReplaceOneDepth(): void
     {
-        $str = "Transform [[foo]] by bar";
+        $str = "Transform [[#foo]] by bar";
         $variableToStringService = new VariableToString();
         $newStr = $variableToStringService->setDataset([
             "foo" => "bar"
