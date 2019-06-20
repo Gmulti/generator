@@ -37,6 +37,7 @@ class BaseContextGenerator implements TextGenerate, ContextGenerate
     public function generate($data): string
     {
         $spec = $this->specificationService->constructSpecification($this->dataSpecTest);
+
         if (!$spec->isSatisfedBy($data)) {
             return '';
         }

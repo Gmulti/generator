@@ -164,15 +164,19 @@ class BaseGenerator implements TextGenerators
     {
         $str = '';
         foreach ($this->getSetupTextGenerators() as $key => $textGenerator) {
-            if (!empty($str) || '.' === substr($str, -1)) {
+            $addText = '';
+
+            if (array_key_exists('data', $textGenerator)) {
+                $addText = $textGenerator->generate($textGenerator['data']);
+            } else {
+                $addText = $textGenerator->generate($data);
+            }
+
+            if (!empty($addText) && ( !empty($str) || '.' === substr($str, -1) ) ) {
                 $str .= ' ';
             }
 
-            if (array_key_exists('data', $textGenerator)) {
-                $str .= $textGenerator->generate($textGenerator['data']);
-            } else {
-                $str .= $textGenerator->generate($data);
-            }
+            $str .= $addText;
         }
 
         $str = Spinning::process($str);

@@ -2,6 +2,7 @@
 
 namespace Generator\Models\Specification;
 
+use Generator\Models\CanReplaceVariable;
 use Generator\Services\VariableToString;
 
 /**
@@ -18,14 +19,14 @@ abstract class AbstractSpecification implements SpecificationInterface
     /**
      * @param string $string
      */
-    public function __construct($string, $variableToString = null)
+    public function __construct($string, ?CanReplaceVariable $variableToString = null)
     {
         $this->string = $string;
 
         if (is_null($variableToString)) {
             $this->setDefaultVariableToStringService();
         } else {
-            $this->variableToString = $variableToString;
+            $this->variableToStringService = $variableToString;
         }
     }
 
@@ -38,11 +39,11 @@ abstract class AbstractSpecification implements SpecificationInterface
     }
 
     /**
-     * @param string $variable
+     * @param $variable
      *
      * @return void
      */
-    public function setVariable(string $variable)
+    public function setVariable($variable)
     {
         $this->variable = $variable;
 

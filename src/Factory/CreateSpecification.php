@@ -8,6 +8,7 @@ use Generator\Models\Specification\AbstractSpecification;
 use Generator\Models\Specification\NotX;
 use Generator\Models\Specification\OrX;
 use Generator\Models\Specification\AndX;
+use Generator\Models\Specification\IsTrue;
 
 class CreateSpecification implements SpecificationConditionTest, CanConstructSpecification
 {
@@ -58,6 +59,14 @@ class CreateSpecification implements SpecificationConditionTest, CanConstructSpe
     }
 
     /**
+     * @return AbstractSpecification
+     */
+    public function createSpecificationAlreadyTrue(): AbstractSpecification
+    {
+        return new IsTrue(true);
+    }
+
+    /**
      * @param array $data
      *
      * @return Specification
@@ -98,6 +107,10 @@ class CreateSpecification implements SpecificationConditionTest, CanConstructSpe
     protected function constructOrSpecification($arraySpec)
     {
         $specification = null;
+
+        if (empty($arraySpec)) {
+            return $this->createSpecificationAlreadyTrue();
+        }
 
         if (count($arraySpec) > 1) {
             foreach ($arraySpec as $key => $value) {

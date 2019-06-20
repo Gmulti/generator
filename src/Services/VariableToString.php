@@ -60,8 +60,16 @@ class VariableToString implements CanReplaceVariable
     /**
      * @param string $variable
      */
-    public function getValueByVariableFromDataSet(string $variable)
-    {
+    public function getValueByVariableFromDataSet($variable){
+        
+        if(!is_string($variable)){
+            return $variable;
+        }
+
+        if(strpos($variable, '#') === false){
+            return $variable;
+        }
+
         $keys = explode('#', $variable);
 
         return $this->getKeyValueByKeys($keys);
