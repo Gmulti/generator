@@ -2,9 +2,7 @@
 
 namespace Generator\Models\ContextGenerator;
 
-use  Generator\Models\ContextGenerator\Base\BaseContextGenerator;
-
-class BeginReverseMatchEasy extends BaseContextGenerator
+class BeginReverseMatchEasy extends SingleContext
 {
     protected $text = 'Déplacement à priori facile de [[visitor_team#labels#name]] à [[home_team#labels#name]]';
 

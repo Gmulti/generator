@@ -2,7 +2,7 @@
 
 namespace Generator\Factory;
 
-class TextGeneratorFactory
+class ContextGeneratorFactory
 {
     /**
      * @param array $context

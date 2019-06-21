@@ -1,8 +1,10 @@
 <?php
 
-namespace Generator\Models\ContextGenerator\Base;
+namespace Generator\Models\ContextGenerator;
 
-class ManyContextGenerator implements ContextGenerate
+use Generator\Models\Generator\CanUseContexts;
+
+class ManyContext implements CanUseContexts
 {
     protected $contexts = [];
 
@@ -37,12 +39,12 @@ class ManyContextGenerator implements ContextGenerate
     }
 
     /**
-     * @param string               $key
-     * @param BaseContextGenerator $context
+     * @param string        $key
+     * @param SingleContext $context
      *
      * @return $this
      */
-    public function setContextGeneratorByKey($key, BaseContextGenerator $context)
+    public function setContextGeneratorByKey($key, SingleContext $context)
     {
         $this->contexts[$key] = $context;
 

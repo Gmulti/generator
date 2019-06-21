@@ -2,9 +2,7 @@
 
 namespace Generator\Models\ContextGenerator;
 
-use  Generator\Models\ContextGenerator\Base\BaseContextGenerator;
-
-class BeginMatch extends BaseContextGenerator
+class BeginMatch extends SingleContext
 {
     protected $text = '[[home_team#labels#name]] {accueille|reçoit|affronte} [[visitor_team#labels#name]]';
 

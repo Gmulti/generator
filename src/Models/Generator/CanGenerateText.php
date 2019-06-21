@@ -12,14 +12,9 @@ namespace Generator\Models\Generator;
 interface CanGenerateText
 {
     /**
-     * @param array $contexts
+     * @param array $data
+     *
+     * @return string
      */
-    public function setContexts(array $contexts);
-
-    /**
-     * @return array
-     */
-    public function getContexts(): array;
-
     public function generate($data): string;
 }

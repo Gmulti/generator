@@ -2,9 +2,9 @@
 
 namespace Generator\Models\ContextGenerator\Many;
 
-use Generator\Models\ContextGenerator\Base\ManyContextGenerator;
+use Generator\Models\ContextGenerator\ManyContext;
 
-class BeginMatch extends ManyContextGenerator
+class BeginMatch extends ManyContext
 {
     protected $contexts = [
         "\Generator\Models\ContextGenerator\BeginReverseMatchEasy",

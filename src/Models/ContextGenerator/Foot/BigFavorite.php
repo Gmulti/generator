@@ -2,9 +2,7 @@
 
 namespace Generator\Models\ContextGenerator;
 
-use  Generator\Models\ContextGenerator\Base\BaseContextGenerator;
-
-class BigFavorite extends BaseContextGenerator
+class BigFavorite extends SingleContext
 {
     protected $text = ' {en grandissime favori}';
 

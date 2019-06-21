@@ -1,6 +1,6 @@
 <?php
 
-namespace Generator\Models\ContextGenerator\Base;
+namespace Generator\Models\ContextGenerator;
 
 /**
  * @version 1.0.0
@@ -9,7 +9,7 @@ namespace Generator\Models\ContextGenerator\Base;
  *
  * @author Thomas DENEULIN <thomasdeneulin@gmail.com>
  */
-interface TextGenerate
+interface CanUseDataSpec
 {
     /**
      * @return array
@@ -20,14 +20,4 @@ interface TextGenerate
      * @param array $dataSpecTest
      */
     public function setDataSpecTest(array $dataSpecTest);
-
-    /**
-     * @param string $text
-     */
-    public function setText(string $text);
-
-    /**
-     * @return string
-     */
-    public function getText(): string;
 }

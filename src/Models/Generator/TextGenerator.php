@@ -4,13 +4,13 @@ namespace Generator\Models\Generator;
 
 use Generator\Helpers\Spinning;
 use Generator\Factory\ManyContextGeneratorFactory;
-use Generator\Factory\TextGeneratorFactory;
-use Generator\Models\ContextGenerator\Base\ManyContextGenerator;
-use Generator\Models\ContextGenerator\Base\TextGenerate;
+use Generator\Factory\ContextGeneratorFactory;
 use Generator\Models\CanReplaceVariable;
+use Generator\Models\ContextGenerator\SingleContext;
+use Generator\Models\ContextGenerator\ManyContext;
 use Generator\Services\VariableToString;
 
-class TextGenerator implements CanGenerateText
+class TextGenerator implements CanGenerateText, CanUseContexts
 {
     protected $contexts;
 
@@ -32,7 +32,7 @@ class TextGenerator implements CanGenerateText
         if (!array_key_exists('TextGenerator', $factories)) {
             $this->setDefaultTextGeneratorFactory();
         } else {
-            $this->textGeneratorFactory = $factories['TextGenerator'];
+            $this->contextGeneratorFactory = $factories['TextGenerator'];
         }
 
         if (is_null($variableToString)) {
@@ -52,7 +52,7 @@ class TextGenerator implements CanGenerateText
 
     public function setDefaultTextGeneratorFactory(): void
     {
-        $this->textGeneratorFactory = new TextGeneratorFactory();
+        $this->contextGeneratorFactory = new ContextGeneratorFactory();
     }
 
     public function setDefaultManyContextGeneratorFactory(): void
@@ -85,7 +85,7 @@ class TextGenerator implements CanGenerateText
      */
     public function getClassDefaultContextGenerator(): string
     {
-        return '\\Generator\\Models\\ContextGenerator\\Base\\BaseContextGenerator';
+        return '\\Generator\Models\ContextGenerator\\SingleContext';
     }
 
     /**
@@ -93,7 +93,7 @@ class TextGenerator implements CanGenerateText
      */
     public function getClassDefaultManyContextGenerator(): string
     {
-        return '\\Generator\\Models\\ContextGenerator\\Base\\ManyContextGenerator';
+        return '\\Generator\\Models\\ContextGenerator\\ManyContext';
     }
 
     /**
@@ -121,7 +121,7 @@ class TextGenerator implements CanGenerateText
         foreach ($this->getContexts() as $key => $contextGenerator) {
             $contextGenerator = $this->constructContextGenerator($contextGenerator);
 
-            if ($contextGenerator['class'] instanceof ManyContextGenerator) {
+            if ($contextGenerator['class'] instanceof ManyContext) {
                 $contextGenerator = $this->manyContextGeneratorFactory->constructManyContextGenerator($contextGenerator);
                 foreach ($contextGenerator->getContexts() as $key => $context) {
                     $prepareContext = [];
@@ -132,10 +132,10 @@ class TextGenerator implements CanGenerateText
                     }
 
                     $context = $this->constructContextGenerator($prepareContext);
-                    $contextGenerator->setContextGeneratorByKey($key, $this->textGeneratorFactory->constructTextGenerator($context));
+                    $contextGenerator->setContextGeneratorByKey($key, $this->contextGeneratorFactory->constructTextGenerator($context));
                 }
-            } elseif ($contextGenerator['class'] instanceof TextGenerate) {
-                $contextGenerator = $this->textGeneratorFactory->constructTextGenerator($contextGenerator);
+            } elseif ($contextGenerator['class'] instanceof SingleContext) {
+                $contextGenerator = $this->contextGeneratorFactory->constructTextGenerator($contextGenerator);
             }
 
             yield $contextGenerator;

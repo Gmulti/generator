@@ -2,9 +2,7 @@
 
 namespace Generator\Models\ContextGenerator;
 
-use  Generator\Models\ContextGenerator\Base\BaseContextGenerator;
-
-class LoseLastMatchAndFavorite extends BaseContextGenerator
+class LoseLastMatchAndFavorite extends SingleContext
 {
     protected $text = " avec l'obligation de {s'imposer|prendre les 3 points|faire un résultat} après {son récent revers|sa récente défaite}";
 

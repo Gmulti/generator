@@ -1,12 +1,13 @@
 <?php
 
-namespace Generator\Models\ContextGenerator\Base;
+namespace Generator\Models\ContextGenerator;
 
 use Generator\Helpers\Spinning;
 use Generator\Models\CanGetSpecificationFactory;
 use Generator\Services\UseSpecificationFactory;
+use Generator\Models\Generator\CanGenerateText;
 
-class BaseContextGenerator implements TextGenerate, ContextGenerate
+class SingleContext implements CanUseText, CanUseDataSpec, CanGenerateText
 {
     protected $dataSpecTest = [];
 
