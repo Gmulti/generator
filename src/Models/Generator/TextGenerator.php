@@ -1,6 +1,6 @@
 <?php
 
-namespace Generator\Models\Generator\Base;
+namespace Generator\Models\Generator;
 
 use Generator\Helpers\Spinning;
 use Generator\Factory\ManyContextGeneratorFactory;
@@ -10,18 +10,18 @@ use Generator\Models\ContextGenerator\Base\TextGenerate;
 use Generator\Models\CanReplaceVariable;
 use Generator\Services\VariableToString;
 
-class BaseGenerator implements TextGenerators
+class TextGenerator implements CanGenerateText
 {
-    protected $textGenerators;
+    protected $contexts;
 
     /**
-     * @param array              $textGenerators
+     * @param array              $contexts
      * @param array              $factories
      * @param CanReplaceVariable $variableToString
      */
-    public function __construct(array $textGenerators = [], $factories = [], ?CanReplaceVariable $variableToString = null)
+    public function __construct(array $contexts = [], $factories = [], ?CanReplaceVariable $variableToString = null)
     {
-        $this->setTextGenerators($textGenerators);
+        $this->setContexts($contexts);
 
         if (!array_key_exists('ManyContextGenerator', $factories)) {
             $this->setDefaultManyContextGeneratorFactory();
@@ -61,13 +61,13 @@ class BaseGenerator implements TextGenerators
     }
 
     /**
-     * @param array $textGenerators
+     * @param array $contexts
      *
      * @return $this
      */
-    public function setTextGenerators(array $textGenerators)
+    public function setContexts(array $contexts)
     {
-        $this->textGenerators = $textGenerators;
+        $this->contexts = $contexts;
 
         return $this;
     }
@@ -75,9 +75,9 @@ class BaseGenerator implements TextGenerators
     /**
      * @return array
      */
-    public function getTextGenerators(): array
+    public function getContexts(): array
     {
-        return $this->textGenerators;
+        return $this->contexts;
     }
 
     /**
@@ -118,7 +118,7 @@ class BaseGenerator implements TextGenerators
 
     protected function getSetupTextGenerators()
     {
-        foreach ($this->getTextGenerators() as $key => $contextGenerator) {
+        foreach ($this->getContexts() as $key => $contextGenerator) {
             $contextGenerator = $this->constructContextGenerator($contextGenerator);
 
             if ($contextGenerator['class'] instanceof ManyContextGenerator) {
@@ -164,19 +164,15 @@ class BaseGenerator implements TextGenerators
     {
         $str = '';
         foreach ($this->getSetupTextGenerators() as $key => $textGenerator) {
-            $addText = '';
-
-            if (array_key_exists('data', $textGenerator)) {
-                $addText = $textGenerator->generate($textGenerator['data']);
-            } else {
-                $addText = $textGenerator->generate($data);
-            }
-
-            if (!empty($addText) && ( !empty($str) || '.' === substr($str, -1) ) ) {
+            if (!empty($str) || '.' === substr($str, -1)) {
                 $str .= ' ';
             }
 
-            $str .= $addText;
+            if (array_key_exists('data', $textGenerator)) {
+                $str .= $textGenerator->generate($textGenerator['data']);
+            } else {
+                $str .= $textGenerator->generate($data);
+            }
         }
 
         $str = Spinning::process($str);

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use Generator\Models\Generator\Base\BaseGenerator;
+use Generator\Models\Generator\TextGenerator;
 
 final class BeginMatchTest extends TestCase
 {
@@ -20,7 +20,7 @@ final class BeginMatchTest extends TestCase
             ],
         ];
 
-        $text = (new BaseGenerator($generators))->generate($this->data);
+        $text = (new TextGenerator($generators))->generate($this->data);
         $this->logicalOr(
             $this->assertEquals('Déplacement à priori facile de Olympique Lyonnais à Angers', $text)
         );

@@ -2,7 +2,7 @@
 
 namespace Generator\Helpers;
 
-class Spinning
+abstract class Spinning
 {
     /**
      * @param string $text

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use Generator\Models\Generator\Base\BaseGenerator;
+use Generator\Models\Generator\TextGenerator;
 
 final class ContextWithInListSpecTest extends TestCase
 {
@@ -14,7 +14,7 @@ final class ContextWithInListSpecTest extends TestCase
 
     public function testDataSpecInListIsValid(): void
     {
-        $generators = [
+        $contexts = [
             [
                 'text'         => '[[home_team#name]] Joue avec Hulk',
                 'dataSpecTest' => [
@@ -29,14 +29,14 @@ final class ContextWithInListSpecTest extends TestCase
             ],
         ];
 
-        $text = (new BaseGenerator($generators))->generate($this->data);
+        $text = (new TextGenerator($contexts))->generate($this->data);
 
         $this->assertEquals('Olympique Lyonnais Joue avec Hulk', $text);
     }
 
     public function testDataSpecInListIsNotValid(): void
     {
-        $generators = [
+        $contexts = [
             [
                 'text'         => '[[home_team#name]] Joue avec Iron Man',
                 'dataSpecTest' => [
@@ -51,7 +51,7 @@ final class ContextWithInListSpecTest extends TestCase
             ],
         ];
 
-        $text = (new BaseGenerator($generators))->generate($this->data);
+        $text = (new TextGenerator($contexts))->generate($this->data);
         $this->assertEmpty($text);
     }
 }
