@@ -19,4 +19,18 @@ final class SpinningTest extends TestCase
             )
         );
     }
+    public function testDoubleSpinningValue(): void
+    {
+        $string = '{magic {foo|bar}|iron {man|first}}';
+        $value = Spinning::process($string);
+        $this->assertThat(
+            $value,
+            $this->logicalOr(
+                $this->equalTo('magic foo'),
+                $this->equalTo('magic bar'),
+                $this->equalTo('iron man'),
+                $this->equalTo('iron first')
+            )
+        );
+    }
 }
