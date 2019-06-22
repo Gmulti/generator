@@ -65,6 +65,23 @@ class VariableFilter
 
     /**
      *
+     * @param array $filter
+     * @return int|string
+     */
+    public function executeFilter($value, $filter){
+        list($function, $params) = $this->parseFilter($filter);
+            
+        if(!method_exists($this->useFilterService, $function)){
+            return $value;
+        }
+        
+        array_unshift($params, $value);
+
+        return call_user_func_array([$this->useFilterService, $function], $params);
+    }
+
+    /**
+     *
      * @param int|string $value
      * @param array $filters
      * @return int|string
@@ -72,15 +89,7 @@ class VariableFilter
     public function applyFilters($value, array $filters) {
 
         foreach($filters as $filter){
-            list($function, $params) = $this->parseFilter($filter);
-            
-            if(!method_exists($this->useFilterService, $function)){
-                continue;
-            }
-            
-            array_unshift($params, $value);
-
-            $value = call_user_func_array([$this->useFilterService, $function], $params);
+            $value = $this->executeFilter($value, $filter);
         }
 
         return $value;
