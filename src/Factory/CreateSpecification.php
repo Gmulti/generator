@@ -12,15 +12,24 @@ use Generator\Models\Specification\IsTrue;
 
 class CreateSpecification implements SpecificationConditionTest, CanConstructSpecification
 {
+    const LEFT_KEYS = ['left', 'search', 'variable'];
+
+    const RIGHT_KEYS = ['right', 'value', 'list'];
+
     public function __construct()
     {
         $this->conditionTest = [
             'equals'                   => "\Generator\Models\Specification\Equals",
+            '==='                      => "\Generator\Models\Specification\Equals",
             'contains'                 => "\Generator\Models\Specification\Contains",
             'greater_than'             => "\Generator\Models\Specification\GreaterThan",
+            '>='                       => "\Generator\Models\Specification\GreaterThan",
             'strickly_greater_than'    => "\Generator\Models\Specification\StricklyGreaterThan",
+            '>'                        => "\Generator\Models\Specification\StricklyGreaterThan",
             'lesser_than'              => "\Generator\Models\Specification\LesserThan",
+            '<='                       => "\Generator\Models\Specification\LesserThan",
             'strickly_lesser_than'     => "\Generator\Models\Specification\StricklyLesserThan",
+            '<'                        => "\Generator\Models\Specification\StricklyLesserThan",
             'is_true'                  => "\Generator\Models\Specification\IsTrue",
             'is_false'                 => "\Generator\Models\Specification\IsFalse",
             'in_list'                  => "\Generator\Models\Specification\InList",
@@ -67,6 +76,32 @@ class CreateSpecification implements SpecificationConditionTest, CanConstructSpe
         return new IsTrue(true);
     }
 
+    protected function getValueFromKeys($keys, $value){
+        foreach($keys as $key){
+            if(array_key_exists($key, $value)){
+                return $value[$key];
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @return string|bool
+     */
+    public function getLeftValue($value)
+    {
+       return $this->getValueFromKeys(self::LEFT_KEYS, $value);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRightValue($value)
+    {
+        return $this->getValueFromKeys(self::RIGHT_KEYS, $value);
+    }
+
     /**
      * @param array $data
      *
@@ -77,19 +112,14 @@ class CreateSpecification implements SpecificationConditionTest, CanConstructSpe
         $arraySpec = [];
 
         foreach ($data as $keyOr => $valueOr) {
-            foreach ($valueOr as $keyAnd => $valueAnd) {
-                $invert = $valueAnd['invert'] ?? false;
-                $variable = $valueAnd['variable'] ?? false;
+            foreach ($valueOr as $keyAnd => $paramsAnd) {
+                $invert = $paramsAnd['invert'] ?? false;
 
-                if (!array_key_exists('value', $valueAnd)) {
-                    $newSpec = $this->getSpecificationFromConditionTest($valueAnd['condition_test'], null, $invert);
-                } else {
-                    $newSpec = $this->getSpecificationFromConditionTest($valueAnd['condition_test'], $valueAnd['value'], $invert);
-                }
-
-                if ($variable) {
-                    $newSpec->setVariable($variable);
-                }
+                $newSpec = $this->getSpecificationFromConditionTest($paramsAnd, $invert);
+                
+                $newSpec->setVariable(
+                    $this->getRightValue($paramsAnd)
+                );
 
                 $arraySpec[$keyOr][] = $newSpec;
             }
@@ -156,13 +186,16 @@ class CreateSpecification implements SpecificationConditionTest, CanConstructSpe
     }
 
     /**
-     * @param string $conditionTest
-     * @param string $value
+     * @param array $paramsAnd
+     * @param bool $invert
      *
      * @return Specification
      */
-    public function getSpecificationFromConditionTest($conditionTest, $value = null, $invert = false)
-    {
+    public function getSpecificationFromConditionTest($paramsAnd, $invert = false)
+    {   
+        $conditionTest = $paramsAnd['condition_test'];
+        $value = $this->getLeftValue($paramsAnd);
+        
         if (!is_string($conditionTest)) {
             throw new \Exception('Condition test not a string');
         }

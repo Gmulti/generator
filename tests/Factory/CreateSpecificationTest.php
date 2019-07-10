@@ -14,17 +14,17 @@ final class CreateSpecificationTest extends TestCase
             [ // Or
                 [ // AND
                     'condition_test' => 'equals',
-                    'value'          => 'foo',
+                    'left'           => 'foo',
                 ],
                 [
                     'condition_test' => 'contains',
-                    'value'          => 'foo',
+                    'left'           => 'foo',
                 ],
             ],
             [ // OR
                 [
                     'condition_test' => 'contains',
-                    'value'          => 'bar',
+                    'left'           => 'bar',
                 ],
             ],
         ];

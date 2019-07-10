@@ -17,8 +17,8 @@ final class CreateSpecificationGreaterTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [
                 [
-                    'condition_test' => 'greater_than',
-                    'value'          => 3,
+                    'condition_test' => '>=',
+                    'left'           => 3,
                 ],
             ],
         ]);
@@ -31,8 +31,8 @@ final class CreateSpecificationGreaterTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [
                 [
-                    'condition_test' => 'strickly_greater_than',
-                    'value'          => 4,
+                    'condition_test' => '>',
+                    'left'          => 4,
                 ],
             ],
         ]);
@@ -45,8 +45,50 @@ final class CreateSpecificationGreaterTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [
                 [
+                    'condition_test' => '>',
+                    'left'          => 3,
+                ],
+            ],
+        ]);
+
+        $this->assertFalse($spec->isSatisfedBy(3));
+    }
+
+    public function testCreateSpecificationIsGreaterThanWithString()
+    {
+        $spec = $this->specification->constructSpecification([
+            [
+                [
+                    'condition_test' => 'greater_than',
+                    'left'           => 3,
+                ],
+            ],
+        ]);
+
+        $this->assertTrue($spec->isSatisfedBy(3));
+    }
+
+    public function testCreateSpecificationIsStricklyGreaterThanWithString()
+    {
+        $spec = $this->specification->constructSpecification([
+            [
+                [
                     'condition_test' => 'strickly_greater_than',
-                    'value'          => 3,
+                    'left'          => 4,
+                ],
+            ],
+        ]);
+
+        $this->assertTrue($spec->isSatisfedBy(3));
+    }
+
+    public function testCreateSpecificationIsNotStricklyGreaterThanWithString()
+    {
+        $spec = $this->specification->constructSpecification([
+            [
+                [
+                    'condition_test' => 'strickly_greater_than',
+                    'left'          => 3,
                 ],
             ],
         ]);

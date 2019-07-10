@@ -16,13 +16,13 @@ final class ContextWithInListSpecTest extends TestCase
     {
         $contexts = [
             [
-                'text'         => '[[home_team#name]] Joue avec Hulk',
+                'text'         => '[[#home_team#name]] Joue avec Hulk',
                 'dataSpecTest' => [
                     [
                         [
                             'condition_test' => 'in_list',
-                            'value'          => 'Hulk',
-                            'variable'       => 'home_team#players',
+                            'search'         => 'Hulk',
+                            'list'           => '#home_team#players',
                         ],
                     ],
                 ],
@@ -38,13 +38,13 @@ final class ContextWithInListSpecTest extends TestCase
     {
         $contexts = [
             [
-                'text'         => '[[home_team#name]] Joue avec Iron Man',
+                'text'         => '[[#home_team#name]] Joue avec Iron Man',
                 'dataSpecTest' => [
                     [
                         [
                             'condition_test' => 'in_list',
-                            'value'          => 'Iron Man',
-                            'variable'       => 'home_team#players',
+                            'search'         => 'Iron Man',
+                            'list'          => '#home_team#players',
                         ],
                     ],
                 ],

@@ -59,7 +59,7 @@ class VariableToString implements CanReplaceVariable
             $dataset = $this->dataset;
         }
 
-        if (array_key_exists(0, $keys) && array_key_exists($keys[0], $dataset)) {
+        if (is_array($keys) && array_key_exists(0, $keys) && array_key_exists($keys[0], $dataset)) {
             $dataset = $dataset[$keys[0]];
             unset($keys[0]);
             $keys = array_values($keys);
@@ -74,7 +74,7 @@ class VariableToString implements CanReplaceVariable
      * @param string $variable
      */
     public function getValueByVariableFromDataSet($variable){
-        
+
         if(!is_string($variable)){
             return $variable;
         }
@@ -84,14 +84,14 @@ class VariableToString implements CanReplaceVariable
         }
 
         $keys = explode('#', $variable);
-
+        
         if(empty($keys[0])){
             array_shift($keys);
         }
 
         $filters = $this->variableFilterService->getFiltersFromString(end($keys));
         $keys[count($keys)-1] = $this->variableFilterService->cleanFiltersForString(end($keys));
-
+        
         $value = $this->getKeyValueByKeys($keys);
         
         if(empty($filters)){

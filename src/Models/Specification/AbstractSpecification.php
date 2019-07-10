@@ -66,7 +66,9 @@ abstract class AbstractSpecification implements SpecificationInterface
     public function getValueTestFromItem($item)
     {
         if ($this->hasAVariable()) {
-            return $this->variableToStringService->setDataSet($item)->getValueByVariableFromDataSet($this->variable);
+            return $this->variableToStringService
+                        ->setDataSet($item)
+                        ->getValueByVariableFromDataSet($this->variable);
         }
 
         return $item;
