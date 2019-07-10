@@ -16,7 +16,7 @@ class Contains extends AbstractSpecification
             return false;
         }
 
-        $pos = strpos($this->string, $value);
+        $pos = strpos($this->getValueStringFromItem($item), $value);
 
         if (false === $pos) {
             return false;

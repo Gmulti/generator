@@ -11,6 +11,6 @@ class LesserThan extends AbstractSpecification
      */
     public function isSatisfedBy($item)
     {
-        return $this->string <= $this->getValueTestFromItem($item);
+        return $this->getValueStringFromItem($item) <= $this->getValueTestFromItem($item);
     }
 }

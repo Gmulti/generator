@@ -8,6 +8,10 @@ class VariableToString implements CanReplaceVariable
 {
     const REGEX = "#\[\[(.*?)\]\]#";
 
+    /**
+     *
+     * @param $variableFilterService
+     */
     public function __construct($variableFilterService = null){
         if(is_null($variableFilterService)){
             $this->createDefaultVariableFilterService();
@@ -70,16 +74,29 @@ class VariableToString implements CanReplaceVariable
         return $dataset;
     }
 
+
+    /**
+     * @param string $variable
+     * @return boolean
+     */
+    public function isVariable($variable){
+        if(!is_string($variable)){
+            return false;
+        }
+
+        if(strpos($variable, '#') === false){
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * @param string $variable
      */
     public function getValueByVariableFromDataSet($variable){
 
-        if(!is_string($variable)){
-            return $variable;
-        }
-
-        if(strpos($variable, '#') === false){
+        if(!$this->isVariable($variable)){
             return $variable;
         }
 

@@ -95,4 +95,22 @@ final class CreateSpecificationGreaterTest extends TestCase
 
         $this->assertFalse($spec->isSatisfedBy(3));
     }
+
+    public function testCreateSpecificationIsGreaterThanWithVariables()
+    {
+        $spec = $this->specification->constructSpecification([
+            [
+                [
+                    'left'          => "#left",
+                    'condition_test' => '>',
+                    'right'         => "#right"
+                ],
+            ],
+        ]);
+
+        $this->assertTrue($spec->isSatisfedBy([
+            "left" => 5,
+            "right" => 4
+        ]));
+    }
 }

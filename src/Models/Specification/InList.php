@@ -11,6 +11,6 @@ class InList extends AbstractSpecification
      */
     public function isSatisfedBy($item)
     {
-        return in_array($this->string, $this->getValueTestFromItem($item), true);
+        return in_array($this->getValueStringFromItem($item), $this->getValueTestFromItem($item), true);
     }
 }

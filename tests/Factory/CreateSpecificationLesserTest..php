@@ -53,4 +53,64 @@ final class CreateSpecificationLesserTest extends TestCase
 
         $this->assertFalse($spec->isSatisfedBy(3));
     }
+    
+    public function testCreateSpecificationIsLesserThanWithSymbol()
+    {
+        $spec = $this->specification->constructSpecification([
+            [
+                [
+                    'condition_test' => '<=',
+                    'value'          => 3,
+                ],
+            ],
+        ]);
+
+        $this->assertTrue($spec->isSatisfedBy(3));
+    }
+
+    public function testCreateSpecificationIsStricklyLesserThanWithSymbol()
+    {
+        $spec = $this->specification->constructSpecification([
+            [
+                [
+                    'condition_test' => '<',
+                    'value'          => 2,
+                ],
+            ],
+        ]);
+
+        $this->assertTrue($spec->isSatisfedBy(3));
+    }
+
+    public function testCreateSpecificationIsNotStricklyLesserThanWithSymbol()
+    {
+        $spec = $this->specification->constructSpecification([
+            [
+                [
+                    'condition_test' => '<',
+                    'value'          => 3,
+                ],
+            ],
+        ]);
+
+        $this->assertFalse($spec->isSatisfedBy(3));
+    }
+
+    public function testCreateSpecificationIsLesserThanWithVariables()
+    {
+        $spec = $this->specification->constructSpecification([
+            [
+                [
+                    'left'          => "#left",
+                    'condition_test' => '<',
+                    'right'         => "#right"
+                ],
+            ],
+        ]);
+
+        $this->assertTrue($spec->isSatisfedBy([
+            "left" => 3,
+            "right" => 4
+        ]));
+    }
 }

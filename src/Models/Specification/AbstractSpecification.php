@@ -38,6 +38,10 @@ abstract class AbstractSpecification implements SpecificationInterface
         $this->variableToStringService = new VariableToString();
     }
 
+    public function getVariableToStringService(){
+        return $this->variableToStringService;
+    }
+
     /**
      * @param $variable
      *
@@ -57,6 +61,17 @@ abstract class AbstractSpecification implements SpecificationInterface
     {
         return !is_null($this->variable);
     }
+    
+    public function getValueStringFromItem($item){
+        $leftValue = $this->string;
+        if($this->getVariableToStringService()->isVariable($leftValue)) {
+            $leftValue = $this->getVariableToStringService()->setDataSet($item)
+                              ->getValueByVariableFromDataSet($leftValue);
+        }
+
+        return $leftValue;
+    }
+
 
     /**
      * @param any $item
@@ -66,7 +81,7 @@ abstract class AbstractSpecification implements SpecificationInterface
     public function getValueTestFromItem($item)
     {
         if ($this->hasAVariable()) {
-            return $this->variableToStringService
+            return $this->getVariableToStringService()
                         ->setDataSet($item)
                         ->getValueByVariableFromDataSet($this->variable);
         }
