@@ -9,7 +9,7 @@ final class ContextWithInListSpecTest extends TestCase
 {
     protected function setUp(): void
     {
-        $this->data = json_decode(file_get_contents(__DIR__ . '/../../../data/data-tests-simple.json'), true);
+        $this->data = json_decode(file_get_contents(__DIR__ . '/../../../data/tests-simple.json'), true);
     }
 
     public function testDataSpecInListIsValid(): void

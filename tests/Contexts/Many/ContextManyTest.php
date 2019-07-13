@@ -9,7 +9,7 @@ final class ContextManyTest extends TestCase
 {
     protected function setUp(): void
     {
-        $this->data = json_decode(file_get_contents(__DIR__ . '/../../../data/data-tests-many.json'), true);
+        $this->data = json_decode(file_get_contents(__DIR__ . '/../../../data/tests-many.json'), true);
     }
 
     public function testManyContexts(): void
