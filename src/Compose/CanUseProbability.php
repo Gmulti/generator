@@ -1,6 +1,6 @@
 <?php
 
-namespace Generator\Models\ContextGenerator;
+namespace Generator\Compose;
 
 interface CanUseProbability
 {

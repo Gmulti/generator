@@ -1,6 +1,6 @@
 <?php
 
-namespace Generator\Models\Generator;
+namespace Generator\Models;
 
 /**
  * @version 1.0.0

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use Generator\Models\Generator\TextGenerator;
+use Generator\TextGenerator;
 
 final class ContextWithInListSpecTest extends TestCase
 {

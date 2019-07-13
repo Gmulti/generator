@@ -1,13 +1,15 @@
 <?php
 
-namespace Generator\Models\Generator;
+namespace Generator;
 
 use Generator\Helpers\Spinning;
 use Generator\Factory\ManyContextGeneratorFactory;
 use Generator\Factory\ContextGeneratorFactory;
+use Generator\Models\CanGenerateText;
 use Generator\Models\CanReplaceVariable;
-use Generator\Models\ContextGenerator\SingleContext;
-use Generator\Models\ContextGenerator\ManyContext;
+use Generator\Models\CanUseContexts;
+use Generator\Contexts\Single;
+use Generator\Contexts\Many;
 use Generator\Services\VariableToString;
 
 class TextGenerator implements CanGenerateText, CanUseContexts
@@ -85,7 +87,7 @@ class TextGenerator implements CanGenerateText, CanUseContexts
      */
     public function getClassDefaultContextGenerator(): string
     {
-        return '\\Generator\Models\ContextGenerator\\SingleContext';
+        return '\\Generator\Contexts\\Single';
     }
 
     /**
@@ -93,7 +95,7 @@ class TextGenerator implements CanGenerateText, CanUseContexts
      */
     public function getClassDefaultManyContextGenerator(): string
     {
-        return '\\Generator\\Models\\ContextGenerator\\ManyContext';
+        return '\\Generator\\Contexts\\Many';
     }
 
     /**
@@ -121,7 +123,7 @@ class TextGenerator implements CanGenerateText, CanUseContexts
         foreach ($this->getContexts() as $key => $contextGenerator) {
             $contextGenerator = $this->constructContextGenerator($contextGenerator);
 
-            if ($contextGenerator['class'] instanceof ManyContext) {
+            if ($contextGenerator['class'] instanceof Many) {
                 $contextGenerator = $this->manyContextGeneratorFactory->constructManyContextGenerator($contextGenerator);
                 foreach ($contextGenerator->getContexts() as $key => $context) {
                     $prepareContext = [];
@@ -134,7 +136,7 @@ class TextGenerator implements CanGenerateText, CanUseContexts
                     $context = $this->constructContextGenerator($prepareContext);
                     $contextGenerator->setContextGeneratorByKey($key, $this->contextGeneratorFactory->constructTextGenerator($context));
                 }
-            } elseif ($contextGenerator['class'] instanceof SingleContext) {
+            } elseif ($contextGenerator['class'] instanceof Single) {
                 $contextGenerator = $this->contextGeneratorFactory->constructTextGenerator($contextGenerator);
             }
 

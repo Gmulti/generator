@@ -1,16 +1,19 @@
 <?php
 
-namespace Generator\Models\ContextGenerator;
+namespace Generator\Contexts;
 
 use Generator\Helpers\Spinning;
 use Generator\Models\CanGetSpecificationFactory;
+use Generator\Models\CanGenerateText;
 use Generator\Services\UseSpecificationFactory;
-use Generator\Models\Generator\CanGenerateText;
-use Generator\Models\Compose\Probability;
-use Generator\Models\Compose\Text;
-use Generator\Models\Compose\DataSpec;
+use Generator\Compose\CanUseText;
+use Generator\Compose\CanUseDataSpec;
+use Generator\Compose\CanUseProbability;
+use Generator\Compose\Probability;
+use Generator\Compose\Text;
+use Generator\Compose\DataSpec;
 
-class SingleContext implements CanUseText, CanUseDataSpec, CanGenerateText, CanUseProbability
+class Single implements CanUseText, CanUseDataSpec, CanGenerateText, CanUseProbability
 {
     use Probability;
     use Text;

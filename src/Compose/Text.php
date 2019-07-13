@@ -1,6 +1,6 @@
 <?php
 
-namespace Generator\Models\Compose;
+namespace Generator\Compose;
 
 trait Text
 {

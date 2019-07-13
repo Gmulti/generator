@@ -2,9 +2,9 @@
 
 namespace Generator\Factory;
 
-use Generator\Models\ContextGenerator\CanUseText;
-use Generator\Models\ContextGenerator\CanUseProbability;
-use Generator\Models\ContextGenerator\CanUseDataSpec;
+use Generator\Compose\CanUseText;
+use Generator\Compose\CanUseProbability;
+use Generator\Compose\CanUseDataSpec;
 
 class ContextGeneratorFactory
 {
