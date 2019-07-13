@@ -1,0 +1,29 @@
+{
+    "player": {
+      "id": "4072",
+      "name": "Peter Crouch",
+      "position": "Avant centre",
+      "age": "38",
+      "nationalities_1": "England",
+      "nationalities_2": "Ireland"
+    },
+    "id_hash": "339a5aebbf5c1411332fb643ccdfbebb",
+    "from_club": "Burnley FC",
+    "from_league": "Premier League",
+    "from_country": "England",
+    "from_no_club": false,
+    "to_club": "Fin de carrière",
+    "to_league": "",
+    "to_no_club": false,
+    "to_finish_career": true,
+    "is_loan": false,
+    "date_transfer": "12 juil. 2019",
+    "market_value": "1,00 mio. €",
+    "transfer_value": "-",
+    "value_market_transfer": {
+      "value": 0,
+      "unit": ""
+    },
+    "thumbnail": "https://tmssl.akamaized.net//images/portrait/medium/4072-1475584165.jpg?lm=1475584188",
+    "date_transfer_unix": 1562889600
+  }

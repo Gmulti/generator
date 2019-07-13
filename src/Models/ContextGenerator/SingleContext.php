@@ -6,12 +6,15 @@ use Generator\Helpers\Spinning;
 use Generator\Models\CanGetSpecificationFactory;
 use Generator\Services\UseSpecificationFactory;
 use Generator\Models\Generator\CanGenerateText;
+use Generator\Models\Compose\Probability;
+use Generator\Models\Compose\Text;
+use Generator\Models\Compose\DataSpec;
 
-class SingleContext implements CanUseText, CanUseDataSpec, CanGenerateText
+class SingleContext implements CanUseText, CanUseDataSpec, CanGenerateText, CanUseProbability
 {
-    protected $dataSpecTest = [];
-
-    protected $text = '';
+    use Probability;
+    use Text;
+    use DataSpec;
 
     /**
      * @param CanGetSpecificationFactory $specificationService
@@ -39,47 +42,11 @@ class SingleContext implements CanUseText, CanUseDataSpec, CanGenerateText
     {
         $spec = $this->specificationService->constructSpecification($this->dataSpecTest);
 
-        if (!$spec->isSatisfedBy($data)) {
+        if (!$spec->isSatisfedBy($data) || !$this->isPossible()) {
             return '';
         }
 
         return $this->getText();
-    }
-
-    /**
-     * @return array
-     */
-    public function getDataSpecTest(): array
-    {
-        return $this->dataSpecTest;
-    }
-
-    /**
-     * @param array $dataSpecTest
-     */
-    public function setDataSpecTest(array $dataSpecTest)
-    {
-        $this->dataSpecTest = $dataSpecTest;
-
-        return $this;
-    }
-
-    /**
-     * @param string $text
-     */
-    public function setText(string $text)
-    {
-        $this->text = $text;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getText(): string
-    {
-        return $this->text;
     }
 
     /**

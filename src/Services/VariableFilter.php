@@ -3,8 +3,9 @@
 namespace Generator\Services;
 
 use Generator\Models\CanFilterService;
+use Generator\Models\CanApplyFilter;
 
-class VariableFilter
+class VariableFilter implements CanApplyFilter
 {
     const REGEX_FUNCTION = "#((.*)\(|.*)#";
     const REGEX_PARAMS = '#"(?<params>(.*?))"#';

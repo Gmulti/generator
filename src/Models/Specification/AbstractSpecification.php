@@ -3,7 +3,7 @@
 namespace Generator\Models\Specification;
 
 use Generator\Models\CanReplaceVariable;
-use Generator\Services\VariableToString;
+use Generator\Models\Specification\Compose\UseVariableSpecification;
 
 /**
  * @version 1.0.0
@@ -14,7 +14,7 @@ use Generator\Services\VariableToString;
  */
 abstract class AbstractSpecification implements SpecificationInterface
 {
-    protected $variable = null;
+    use UseVariableSpecification;
 
     /**
      * @param string $string
@@ -28,65 +28,6 @@ abstract class AbstractSpecification implements SpecificationInterface
         } else {
             $this->variableToStringService = $variableToString;
         }
-    }
-
-    /**
-     * @return void
-     */
-    public function setDefaultVariableToStringService(): void
-    {
-        $this->variableToStringService = new VariableToString();
-    }
-
-    public function getVariableToStringService(){
-        return $this->variableToStringService;
-    }
-
-    /**
-     * @param $variable
-     *
-     * @return void
-     */
-    public function setVariable($variable)
-    {
-        $this->variable = $variable;
-
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function hasAVariable(): bool
-    {
-        return !is_null($this->variable);
-    }
-    
-    public function getValueStringFromItem($item){
-        $leftValue = $this->string;
-        if($this->getVariableToStringService()->isVariable($leftValue)) {
-            $leftValue = $this->getVariableToStringService()->setDataSet($item)
-                              ->getValueByVariableFromDataSet($leftValue);
-        }
-
-        return $leftValue;
-    }
-
-
-    /**
-     * @param any $item
-     *
-     * @return any
-     */
-    public function getValueTestFromItem($item)
-    {
-        if ($this->hasAVariable()) {
-            return $this->getVariableToStringService()
-                        ->setDataSet($item)
-                        ->getValueByVariableFromDataSet($this->variable);
-        }
-
-        return $item;
     }
 
     /**

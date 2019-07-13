@@ -8,20 +8,22 @@ class VariableToString implements CanReplaceVariable
 {
     const REGEX = "#\[\[(.*?)\]\]#";
 
+    const VARIABLE_SEPARATOR = '#';
+
     /**
-     *
      * @param $variableFilterService
      */
-    public function __construct($variableFilterService = null){
-        if(is_null($variableFilterService)){
+    public function __construct($variableFilterService = null)
+    {
+        if (is_null($variableFilterService)) {
             $this->createDefaultVariableFilterService();
-        }
-        else{
+        } else {
             $this->variableFilterService = $variableFilterService;
         }
     }
 
-    public function createDefaultVariableFilterService(){
+    public function createDefaultVariableFilterService()
+    {
         $this->variableFilterService = new VariableFilter();
     }
 
@@ -74,17 +76,18 @@ class VariableToString implements CanReplaceVariable
         return $dataset;
     }
 
-
     /**
      * @param string $variable
-     * @return boolean
+     *
+     * @return bool
      */
-    public function isVariable($variable){
-        if(!is_string($variable)){
+    public function isVariable($variable)
+    {
+        if (!is_string($variable)) {
             return false;
         }
 
-        if(strpos($variable, '#') === false){
+        if (false === strpos($variable, self::VARIABLE_SEPARATOR)) {
             return false;
         }
 
@@ -94,29 +97,28 @@ class VariableToString implements CanReplaceVariable
     /**
      * @param string $variable
      */
-    public function getValueByVariableFromDataSet($variable){
-
-        if(!$this->isVariable($variable)){
+    public function getValueByVariableFromDataSet($variable)
+    {
+        if (!$this->isVariable($variable)) {
             return $variable;
         }
 
         $keys = explode('#', $variable);
-        
-        if(empty($keys[0])){
+
+        if (empty($keys[0])) {
             array_shift($keys);
         }
 
         $filters = $this->variableFilterService->getFiltersFromString(end($keys));
-        $keys[count($keys)-1] = $this->variableFilterService->cleanFiltersForString(end($keys));
-        
+        $keys[count($keys) - 1] = $this->variableFilterService->cleanFiltersForString(end($keys));
+
         $value = $this->getKeyValueByKeys($keys);
-        
-        if(empty($filters)){
+
+        if (empty($filters)) {
             return $value;
         }
 
         return $this->variableFilterService->applyFilters($value, $filters);
-         
     }
 
     /**
@@ -138,7 +140,7 @@ class VariableToString implements CanReplaceVariable
             if (!is_string($value) && !is_int($value)) {
                 continue;
             }
-            
+
             $string = str_replace($variables[0][$key], $value, $string);
         }
 

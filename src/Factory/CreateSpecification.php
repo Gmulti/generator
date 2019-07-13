@@ -76,9 +76,14 @@ class CreateSpecification implements SpecificationConditionTest, CanConstructSpe
         return new IsTrue(true);
     }
 
-    protected function getValueFromKeys($keys, $value){
-        foreach($keys as $key){
-            if(array_key_exists($key, $value)){
+    /**
+     * @param array $keys
+     * @param array $value
+     */
+    protected function getValueFromKeys(array $keys, $value)
+    {
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $value)) {
                 return $value[$key];
             }
         }
@@ -91,7 +96,7 @@ class CreateSpecification implements SpecificationConditionTest, CanConstructSpe
      */
     public function getLeftValue($value)
     {
-       return $this->getValueFromKeys(self::LEFT_KEYS, $value);
+        return $this->getValueFromKeys(self::LEFT_KEYS, $value);
     }
 
     /**
@@ -116,7 +121,7 @@ class CreateSpecification implements SpecificationConditionTest, CanConstructSpe
                 $invert = $paramsAnd['invert'] ?? false;
 
                 $newSpec = $this->getSpecificationFromConditionTest($paramsAnd, $invert);
-                
+
                 $newSpec->setVariable(
                     $this->getRightValue($paramsAnd)
                 );
@@ -187,15 +192,15 @@ class CreateSpecification implements SpecificationConditionTest, CanConstructSpe
 
     /**
      * @param array $paramsAnd
-     * @param bool $invert
+     * @param bool  $invert
      *
      * @return Specification
      */
     public function getSpecificationFromConditionTest($paramsAnd, $invert = false)
-    {   
+    {
         $conditionTest = $paramsAnd['condition_test'];
         $value = $this->getLeftValue($paramsAnd);
-        
+
         if (!is_string($conditionTest)) {
             throw new \Exception('Condition test not a string');
         }

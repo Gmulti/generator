@@ -14,22 +14,6 @@ class UseSpecificationFactory implements CanGetSpecificationFactory
     public function __construct(CanConstructSpecification $factory = null)
     {
         $this->specificationFactory = $factory;
-        $this->createDefaultSpecificationFoot();
-    }
-
-    public function createDefaultSpecificationFoot()
-    {
-        $files = array_diff(scandir(__DIR__ . '/../Models/SpecificationFoot'), ['..', '.']);
-        foreach ($files as $filename) {
-            $file = str_replace('.php', '', $filename);
-            $class = '\\Generator\\Models\\SpecificationFoot\\' . $file;
-
-            $name = $file;
-            if (defined($class . '::NAME')) {
-                $name = $class::NAME;
-            }
-            $this->getSpecificationFactory()->setConditionTest($name, $class);
-        }
     }
 
     /**
