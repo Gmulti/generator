@@ -65,7 +65,7 @@ class VariableToString implements CanReplaceVariable
             $dataset = $this->dataset;
         }
 
-        if (is_array($keys) && array_key_exists(0, $keys) && array_key_exists($keys[0], $dataset)) {
+        if (is_array($keys) && is_array($dataset) && array_key_exists(0, $keys) && array_key_exists($keys[0], $dataset)) {
             $dataset = $dataset[$keys[0]];
             unset($keys[0]);
             $keys = array_values($keys);

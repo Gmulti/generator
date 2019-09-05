@@ -54,4 +54,16 @@ final class ContextWithInListSpecTest extends TestCase
         $text = (new TextGenerator($contexts))->generate($this->data);
         $this->assertEmpty($text);
     }
+
+    public function testContextWithReplaceFilter(): void
+    {
+        $contexts = [
+            [
+                'text'         => '[[#home_team#name|replace("Lyon", "Big Lyon")]] Joue avec Iron Man'
+            ],
+        ];
+
+        $text = (new TextGenerator($contexts))->generate($this->data);
+        $this->assertEquals("Olympique Big Lyonnais Joue avec Iron Man", $text);
+    }
 }
