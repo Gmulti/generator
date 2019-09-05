@@ -4,7 +4,7 @@ namespace Generator\Filters;
 
 use Generator\Models\BaseFilter;
 
-class Lowerrcase extends BaseFilter
+class Lowercase extends BaseFilter
 {
     /**
      * @param string $value

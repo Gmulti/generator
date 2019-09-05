@@ -8,7 +8,7 @@ use Generator\Models\CanApplyFilter;
 class VariableFilter implements CanApplyFilter
 {
     const REGEX_FUNCTION = "#((.*)\(|.*)#";
-    const REGEX_PARAMS = '#"(?<params>(.*?))"#';
+    const REGEX_PARAMS = '#("|\')(?<params>(.*?))("|\')#';
 
     /**
      * @param CanFilterService|null $useFilterService

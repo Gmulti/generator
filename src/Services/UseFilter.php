@@ -6,6 +6,8 @@ use Generator\Filters\Date;
 use Generator\Filters\Uppercase;
 use Generator\Filters\Lowercase;
 use Generator\Filters\UCFirst;
+use Generator\Filters\DateLanguage;
+use Generator\Filters\Replace;
 
 class UseFilter
 {
@@ -18,6 +20,27 @@ class UseFilter
     public function date($value, $format = 'd-m-Y')
     {
         return (new Date())->filter($value, $format);
+    }
+
+    /**
+     * @param string $value
+     * @param string $search
+     * @param string $replace
+     */
+    public function replace($value, $search = null, $replace = null)
+    {
+        return (new Replace())->filter($value, $search, $replace);
+    }
+
+    /**
+     * @param int    $value
+     * @param string $format
+     *
+     * @return string
+     */
+    public function datelanguage($value, $format = 'd-m-Y')
+    {
+        return (new DateLanguage())->filter($value, $format);
     }
 
     /**

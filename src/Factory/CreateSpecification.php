@@ -199,6 +199,7 @@ class CreateSpecification implements SpecificationConditionTest, CanConstructSpe
     public function getSpecificationFromConditionTest($paramsAnd, $invert = false)
     {
         $conditionTest = $paramsAnd['condition_test'];
+
         $value = $this->getLeftValue($paramsAnd);
 
         if (!is_string($conditionTest)) {
