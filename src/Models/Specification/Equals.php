@@ -4,7 +4,6 @@ namespace Generator\Models\Specification;
 
 class Equals extends AbstractSpecification
 {
-
     /**
      * @param string $item
      *
@@ -12,6 +11,6 @@ class Equals extends AbstractSpecification
      */
     public function isSatisfedBy($item)
     {
-        return $this->getValueStringFromItem($item) === $this->getValueTestFromItem($item);
+        return $this->getValueStringFromItem($item) == $this->getValueTestFromItem($item);
     }
 }

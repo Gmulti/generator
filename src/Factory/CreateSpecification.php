@@ -20,7 +20,8 @@ class CreateSpecification implements SpecificationConditionTest, CanConstructSpe
     {
         $this->conditionTest = [
             'equals'                   => "\Generator\Models\Specification\Equals",
-            '==='                      => "\Generator\Models\Specification\Equals",
+            '==='                      => "\Generator\Models\Specification\StricklyEquals",
+            '=='                       => "\Generator\Models\Specification\Equals",
             'contains'                 => "\Generator\Models\Specification\Contains",
             'greater_than'             => "\Generator\Models\Specification\GreaterThan",
             '>='                       => "\Generator\Models\Specification\GreaterThan",

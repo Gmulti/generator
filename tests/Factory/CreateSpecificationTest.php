@@ -43,4 +43,64 @@ final class CreateSpecificationTest extends TestCase
 
         $this->assertFalse($spec->isSatisfedBy('beer'));
     }
+
+    public function testCreateSpecificationWithVariables()
+    {
+        $spec = $this->specification->constructSpecification([
+            [
+                [
+                    'left'           => '#left',
+                    'condition_test' => '<',
+                    'right'          => '#right',
+                ],
+            ],
+        ]);
+
+        $this->assertTrue($spec->isSatisfedBy([
+            'left'  => 3,
+            'right' => 4,
+        ]));
+    }
+
+    public function testCreateSpecificationWithVariablesWithFilters()
+    {
+        $spec = $this->specification->constructSpecification([
+            [
+                [
+                    'left'           => '#time#starting_at|date("H")',
+                    'condition_test' => '==',
+                    'right'          => 15,
+                ],
+            ],
+        ]);
+
+        $this->assertTrue($spec->isSatisfedBy([
+            'left'                => 3,
+            'right'               => 4,
+            'time'                => [
+                'starting_at' => 1561131208,
+            ],
+        ]));
+    }
+
+    public function testCreateSpecificationWithVariablesWithFiltersOneQuote()
+    {
+        $spec = $this->specification->constructSpecification([
+            [
+                [
+                    'left'           => "#time#starting_at|date('H')",
+                    'condition_test' => '==',
+                    'right'          => 15,
+                ],
+            ],
+        ]);
+
+        $this->assertTrue($spec->isSatisfedBy([
+            'left'                => 3,
+            'right'               => 4,
+            'time'                => [
+                'starting_at' => 1561131208,
+            ],
+        ]));
+    }
 }
