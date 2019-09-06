@@ -17,7 +17,7 @@ final class CreateSpecificationLesserTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [
                 [
-                    'condition_test' => 'lesser_than',
+                    'operator' => 'lesser_than',
                     'value'          => 3,
                 ],
             ],
@@ -31,7 +31,7 @@ final class CreateSpecificationLesserTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [
                 [
-                    'condition_test' => 'strickly_lesser_than',
+                    'operator' => 'strickly_lesser_than',
                     'value'          => 2,
                 ],
             ],
@@ -45,7 +45,7 @@ final class CreateSpecificationLesserTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [
                 [
-                    'condition_test' => 'strickly_lesser_than',
+                    'operator' => 'strickly_lesser_than',
                     'value'          => 3,
                 ],
             ],
@@ -59,7 +59,7 @@ final class CreateSpecificationLesserTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [
                 [
-                    'condition_test' => '<=',
+                    'operator' => '<=',
                     'value'          => 3,
                 ],
             ],
@@ -73,7 +73,7 @@ final class CreateSpecificationLesserTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [
                 [
-                    'condition_test' => '<',
+                    'operator' => '<',
                     'value'          => 2,
                 ],
             ],
@@ -87,7 +87,7 @@ final class CreateSpecificationLesserTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [
                 [
-                    'condition_test' => '<',
+                    'operator' => '<',
                     'value'          => 3,
                 ],
             ],
@@ -102,7 +102,7 @@ final class CreateSpecificationLesserTest extends TestCase
             [
                 [
                     'left'           => '#left',
-                    'condition_test' => '<',
+                    'operator' => '<',
                     'right'          => '#right',
                 ],
             ],

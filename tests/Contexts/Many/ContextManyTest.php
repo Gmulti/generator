@@ -18,33 +18,33 @@ final class ContextManyTest extends TestCase
             [
                 'contexts'=> [
                     [
-                        'text'        => "[[#player#name]] est désormais libre à l'issue de son contrat avec [[#from_club]] ([[#from_league]]).",
+                        'text'        => "[[player.name]] est désormais libre à l'issue de son contrat avec [[from_club]] ([[from_league]]).",
                         'dataSpecTest'=> [
                             [
                                 [
-                                    'condition_test'=> 'is_true',
-                                    'value'         => '#to_no_club',
+                                    'operator'      => 'is_true',
+                                    'value'         => '[[to_no_club]]',
                                 ],
                             ],
                         ],
                     ],
                     [
-                        'text'        => "[[#player#name]] a décidé d'arrêter sa carrière {à l'issue|à la fin} de son contrat avec [[#from_club]] ([[#from_league]]).",
+                        'text'        => "[[player.name]] a décidé d'arrêter sa carrière {à l'issue|à la fin} de son contrat avec [[from_club]] ([[from_league]]).",
                         'dataSpecTest'=> [
                             [
                                 [
-                                    'condition_test'=> 'is_true',
-                                    'value'         => '#to_finish_career',
+                                    'operator'      => 'is_true',
+                                    'value'         => '[[to_finish_career]]',
                                 ],
                             ],
                         ],
                     ],
                     [
-                        'text'        => '[[#player#name]] change de club le [[#date_transfer]].',
+                        'text'        => '[[player.name]] change de club le [[#date_transfer]].',
                         'dataSpecTest'=> [],
                     ],
                 ],
-            ]
+            ],
         ];
 
         $text = (new TextGenerator($generators))->generate($this->data);
@@ -56,6 +56,5 @@ final class ContextManyTest extends TestCase
                 $this->equalTo("Peter Crouch a décidé d'arrêter sa carrière à la fin de son contrat avec Burnley FC (Premier League).")
             )
         );
-        
     }
 }

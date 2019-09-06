@@ -2,6 +2,7 @@
 
 namespace Generator\Models\Specification;
 
+use Generator\Models\CanUseVariable;
 use Generator\Models\CanReplaceVariable;
 use Generator\Models\Specification\Compose\UseVariableSpecification;
 
@@ -12,7 +13,7 @@ use Generator\Models\Specification\Compose\UseVariableSpecification;
  *
  * @author Thomas DENEULIN <thomasdeneulin@gmail.com>
  */
-abstract class AbstractSpecification implements SpecificationInterface
+abstract class AbstractSpecification implements SpecificationInterface,  CanUseVariable
 {
     use UseVariableSpecification;
 

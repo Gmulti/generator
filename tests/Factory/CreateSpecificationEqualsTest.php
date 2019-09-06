@@ -17,7 +17,7 @@ final class CreateSpecificationEqualsTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [ // Or
                 [
-                    'condition_test' => 'equals',
+                    'operator' => 'equals',
                     'left'           => 'foo',
                 ]
             ]
@@ -31,7 +31,7 @@ final class CreateSpecificationEqualsTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [ // Or
                 [
-                    'condition_test' => 'equals',
+                    'operator' => 'equals',
                     'left'           => 'foo',
                     'right'          => 'beer'
                 ]
@@ -46,7 +46,7 @@ final class CreateSpecificationEqualsTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [ // Or
                 [
-                    'condition_test' => 'equals',
+                    'operator' => 'equals',
                     'left'           => 'foo',
                     'right'          => 'foo'
                 ]

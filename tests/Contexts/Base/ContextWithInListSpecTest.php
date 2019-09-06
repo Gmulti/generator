@@ -16,13 +16,13 @@ final class ContextWithInListSpecTest extends TestCase
     {
         $contexts = [
             [
-                'text'         => '[[#home_team#name]] Joue avec Hulk',
+                'text'         => '[[home_team.name]] Joue avec Hulk',
                 'dataSpecTest' => [
                     [
                         [
-                            'condition_test' => 'in_list',
+                            'operator'       => 'in_list',
                             'search'         => 'Hulk',
-                            'list'           => '#home_team#players',
+                            'list'           => '[[home_team.players]]',
                         ],
                     ],
                 ],
@@ -38,13 +38,13 @@ final class ContextWithInListSpecTest extends TestCase
     {
         $contexts = [
             [
-                'text'         => '[[#home_team#name]] Joue avec Iron Man',
+                'text'         => '[[home_team.name]] Joue avec Iron Man',
                 'dataSpecTest' => [
                     [
                         [
-                            'condition_test' => 'in_list',
+                            'operator'       => 'in_list',
                             'search'         => 'Iron Man',
-                            'list'          => '#home_team#players',
+                            'list'           => '[[home_team.players]]',
                         ],
                     ],
                 ],
@@ -59,11 +59,11 @@ final class ContextWithInListSpecTest extends TestCase
     {
         $contexts = [
             [
-                'text'         => '[[#home_team#name|replace("Lyon", "Big Lyon")]] Joue avec Iron Man'
+                'text'         => '[[home_team.name|replace("Lyon", "Big Lyon")]] Joue avec Iron Man',
             ],
         ];
 
         $text = (new TextGenerator($contexts))->generate($this->data);
-        $this->assertEquals("Olympique Big Lyonnais Joue avec Iron Man", $text);
+        $this->assertEquals('Olympique Big Lyonnais Joue avec Iron Man', $text);
     }
 }

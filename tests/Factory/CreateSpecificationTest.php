@@ -13,17 +13,17 @@ final class CreateSpecificationTest extends TestCase
         $this->data = [
             [ // Or
                 [ // AND
-                    'condition_test' => 'equals',
+                    'operator'       => 'equals',
                     'left'           => 'foo',
                 ],
                 [
-                    'condition_test' => 'contains',
+                    'operator'       => 'contains',
                     'left'           => 'foo',
                 ],
             ],
             [ // OR
                 [
-                    'condition_test' => 'contains',
+                    'operator'       => 'contains',
                     'left'           => 'bar',
                 ],
             ],
@@ -49,9 +49,9 @@ final class CreateSpecificationTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [
                 [
-                    'left'           => '#left',
-                    'condition_test' => '<',
-                    'right'          => '#right',
+                    'left'           => '[[left]]',
+                    'operator'       => '<',
+                    'right'          => '[[right]]',
                 ],
             ],
         ]);
@@ -67,8 +67,8 @@ final class CreateSpecificationTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [
                 [
-                    'left'           => '#time#starting_at|date("H")',
-                    'condition_test' => '==',
+                    'left'           => '[[time.starting_at|date("H")]]',
+                    'operator'       => '==',
                     'right'          => 15,
                 ],
             ],
@@ -88,8 +88,8 @@ final class CreateSpecificationTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [
                 [
-                    'left'           => "#time#starting_at|date('H')",
-                    'condition_test' => '==',
+                    'left'           => "[[time.starting_at|date('H')]]",
+                    'operator'       => '==',
                     'right'          => 15,
                 ],
             ],
@@ -103,5 +103,4 @@ final class CreateSpecificationTest extends TestCase
             ],
         ]));
     }
-
 }

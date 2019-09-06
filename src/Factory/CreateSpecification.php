@@ -199,18 +199,18 @@ class CreateSpecification implements SpecificationConditionTest, CanConstructSpe
      */
     public function getSpecificationFromConditionTest($paramsAnd, $invert = false)
     {
-        $conditionTest = $paramsAnd['condition_test'];
+        $operator = $paramsAnd['operator'];
 
         $value = $this->getLeftValue($paramsAnd);
 
-        if (!is_string($conditionTest)) {
-            throw new \Exception('Condition test not a string');
+        if (!is_string($operator)) {
+            throw new \Exception('Operator not a string');
         }
-        if (!$this->conditionExist($conditionTest)) {
+        if (!$this->conditionExist($operator)) {
             throw new \Exception('Specification not exist');
         }
 
-        $classSpecification = $this->conditionTest[$conditionTest];
+        $classSpecification = $this->conditionTest[$operator];
         if ($invert) {
             $spec = new NotX(new $classSpecification($value));
         } else {

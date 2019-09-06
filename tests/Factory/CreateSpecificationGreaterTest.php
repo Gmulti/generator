@@ -17,7 +17,7 @@ final class CreateSpecificationGreaterTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [
                 [
-                    'condition_test' => '>=',
+                    'operator'       => '>=',
                     'left'           => 3,
                 ],
             ],
@@ -31,7 +31,7 @@ final class CreateSpecificationGreaterTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [
                 [
-                    'condition_test' => '>',
+                    'operator'      => '>',
                     'left'          => 4,
                 ],
             ],
@@ -45,7 +45,7 @@ final class CreateSpecificationGreaterTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [
                 [
-                    'condition_test' => '>',
+                    'operator'      => '>',
                     'left'          => 3,
                 ],
             ],
@@ -59,7 +59,7 @@ final class CreateSpecificationGreaterTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [
                 [
-                    'condition_test' => 'greater_than',
+                    'operator'       => 'greater_than',
                     'left'           => 3,
                 ],
             ],
@@ -73,7 +73,7 @@ final class CreateSpecificationGreaterTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [
                 [
-                    'condition_test' => 'strickly_greater_than',
+                    'operator'      => 'strickly_greater_than',
                     'left'          => 4,
                 ],
             ],
@@ -87,7 +87,7 @@ final class CreateSpecificationGreaterTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [
                 [
-                    'condition_test' => 'strickly_greater_than',
+                    'operator'      => 'strickly_greater_than',
                     'left'          => 3,
                 ],
             ],
@@ -101,16 +101,16 @@ final class CreateSpecificationGreaterTest extends TestCase
         $spec = $this->specification->constructSpecification([
             [
                 [
-                    'left'          => "#left",
-                    'condition_test' => '>',
-                    'right'         => "#right"
+                    'left'          => '[[left]]',
+                    'operator'      => '>',
+                    'right'         => '[[right]]',
                 ],
             ],
         ]);
 
         $this->assertTrue($spec->isSatisfedBy([
-            "left" => 5,
-            "right" => 4
+            'left'  => 5,
+            'right' => 4,
         ]));
     }
 }

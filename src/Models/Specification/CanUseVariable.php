@@ -1,8 +1,6 @@
 <?php
 
-namespace Generator\Models\Specification;
-
-use Generator\Models\CanReplaceVariable;
+namespace Generator\Models;
 
 interface CanUseVariable
 {

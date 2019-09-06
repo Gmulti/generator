@@ -8,7 +8,7 @@ class VariableToString implements CanReplaceVariable
 {
     const REGEX = "#\[\[(.*?)\]\]#";
 
-    const VARIABLE_SEPARATOR = '#';
+    const VARIABLE_SEPARATOR = '.';
 
     /**
      * @param $variableFilterService
@@ -81,17 +81,30 @@ class VariableToString implements CanReplaceVariable
      *
      * @return bool
      */
-    public function isVariable($variable)
+    public function isVariable($variable): bool
     {
         if (!is_string($variable)) {
             return false;
         }
 
-        if (false === strpos($variable, self::VARIABLE_SEPARATOR)) {
+        if (false === strpos($variable, '[[')) {
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * @param string $variable
+     *
+     * @return string
+     */
+    protected function cleanVariable($variable): string
+    {
+        $variable = str_replace('[[', '', $variable);
+        $variable = str_replace(']]', '', $variable);
+
+        return $variable;
     }
 
     /**
@@ -103,7 +116,9 @@ class VariableToString implements CanReplaceVariable
             return $variable;
         }
 
-        $keys = explode('#', $variable);
+        $variable = $this->cleanVariable($variable);
+
+        $keys = explode(self::VARIABLE_SEPARATOR, $variable);
 
         if (empty($keys[0])) {
             array_shift($keys);
@@ -113,7 +128,6 @@ class VariableToString implements CanReplaceVariable
         $keys[count($keys) - 1] = $this->variableFilterService->cleanFiltersForString(end($keys));
 
         $value = $this->getKeyValueByKeys($keys);
-
         if (empty($filters)) {
             return $value;
         }
@@ -134,7 +148,7 @@ class VariableToString implements CanReplaceVariable
             return $string;
         }
 
-        foreach ($variables[1] as $key => $variable) {
+        foreach ($variables[0] as $key => $variable) {
             $value = $this->getValueByVariableFromDataSet($variable);
 
             if (!is_string($value) && !is_int($value)) {
