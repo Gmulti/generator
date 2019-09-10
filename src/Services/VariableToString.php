@@ -52,7 +52,19 @@ class VariableToString implements CanReplaceVariable
     }
 
     /**
-     * [[home#labels#name]] => $data["home"]["labels"]["name"].
+     * @param array $keys
+     *
+     * @return array
+     */
+    protected function removeFirstKeyAndClean($keys): array
+    {
+        unset($keys[0]);
+
+        return array_values($keys);
+    }
+
+    /**
+     * [[home.labels.name]] => $data["home"]["labels"]["name"].
      *
      * @param string $array
      * @param string $dataset
@@ -67,8 +79,7 @@ class VariableToString implements CanReplaceVariable
 
         if (is_array($keys) && is_array($dataset) && array_key_exists(0, $keys) && array_key_exists($keys[0], $dataset)) {
             $dataset = $dataset[$keys[0]];
-            unset($keys[0]);
-            $keys = array_values($keys);
+            $keys = $this->removeFirstKeyAndClean($keys);
 
             return $this->getKeyValueByKeys($keys, $dataset);
         }
@@ -107,7 +118,6 @@ class VariableToString implements CanReplaceVariable
         return $variable;
     }
 
-    
     /**
      * @param string $variable
      */
