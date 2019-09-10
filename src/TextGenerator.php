@@ -11,6 +11,9 @@ use Generator\Models\CanUseContexts;
 use Generator\Contexts\Single;
 use Generator\Contexts\Many;
 use Generator\Services\VariableToString;
+use Generator\Tokenizer\Tokenizer;
+use Generator\Parser\Parser;
+use Generator\Helpers\Tokens;
 
 class TextGenerator implements CanGenerateText, CanUseContexts
 {
@@ -21,7 +24,7 @@ class TextGenerator implements CanGenerateText, CanUseContexts
      * @param array              $factories
      * @param CanReplaceVariable $variableToString
      */
-    public function __construct(array $contexts = [], $factories = [], ?CanReplaceVariable $variableToString = null)
+    public function __construct(array $contexts = [], $factories = [], $services = [])
     {
         $this->setContexts($contexts);
 
@@ -37,11 +40,33 @@ class TextGenerator implements CanGenerateText, CanUseContexts
             $this->contextGeneratorFactory = $factories['TextGenerator'];
         }
 
-        if (is_null($variableToString)) {
+        if (!array_key_exists('VariableToString', $services)) {
             $this->setDefaultVariableToStringService();
-        } else {
-            $this->variableToString = $variableToString;
+        } elseif ($services['VariableToString'] instanceof CanReplaceVariable) {
+            $this->variableToString = $services['VariableToString'];
         }
+
+        if (!array_key_exists('Tokenizer', $services)) {
+            $this->setDefaultTokenizer();
+        } elseif ($services['Tokenizer'] instanceof CanReplaceVariable) {
+            $this->tokenizer = $services['Tokenizer'];
+        }
+
+        if (!array_key_exists('Parser', $services)) {
+            $this->setDefaultParser();
+        } else {
+            $this->parser = $services['Parser'];
+        }
+    }
+
+    public function setDefaultParser()
+    {
+        $this->parser = new Parser();
+    }
+
+    public function setDefaultTokenizer()
+    {
+        $this->tokenizer = new Tokenizer(Tokens::getTokens());
     }
 
     /**
@@ -52,11 +77,17 @@ class TextGenerator implements CanGenerateText, CanUseContexts
         $this->variableToStringService = new VariableToString();
     }
 
+    /**
+     * Create default text generato factory.
+     */
     public function setDefaultTextGeneratorFactory(): void
     {
         $this->contextGeneratorFactory = new ContextGeneratorFactory();
     }
 
+    /**
+     * Create default many context generator factory.
+     */
     public function setDefaultManyContextGeneratorFactory(): void
     {
         $this->manyContextGeneratorFactory = new ManyContextGeneratorFactory();
@@ -170,11 +201,18 @@ class TextGenerator implements CanGenerateText, CanUseContexts
                 $str .= ' ';
             }
 
+            $currentData = $data;
             if (array_key_exists('data', $textGenerator)) {
-                $str .= $textGenerator->generate($textGenerator['data']);
-            } else {
-                $str .= $textGenerator->generate($data);
+                $currentData = $textGenerator["data"];
             }
+            $addText = $textGenerator->generate($currentData);
+            $stream = $this->tokenizer->tokenize($addText);
+            
+            while ($stream->nextToken()) {
+                $addText = $this->parser->parse($addText, $stream->currentToken(), $currentData);
+            }
+
+            $str .= $addText;
         }
 
         $str = Spinning::process($str);

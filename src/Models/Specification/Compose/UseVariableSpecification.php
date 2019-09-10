@@ -2,25 +2,13 @@
 
 namespace Generator\Models\Specification\Compose;
 
-use Generator\Models\CanReplaceVariable;
-use Generator\Services\VariableToString;
+use Generator\Compose\DefaultVariableService;
 
 trait UseVariableSpecification
 {
+    use DefaultVariableService;
+
     protected $variable = null;
-
-    public function setDefaultVariableToStringService(): void
-    {
-        $this->variableToStringService = new VariableToString();
-    }
-
-    /**
-     * @return CanReplaceVariable
-     */
-    public function getVariableToStringService(): CanReplaceVariable
-    {
-        return $this->variableToStringService;
-    }
 
     /**
      * @param $variable
